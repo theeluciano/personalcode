@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Personal Code — Discover Your Archetype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #241A2C;
+    --ink-deep: #1B1322;
+    --panel: #2F2338;
+    --panel-2: #3A2C46;
+    --hair: #4A3A56;
+    --brass: #C7A25C;
+    --brass-dim: #9A7638;
+    --plum: #B06C7C;
+    --text: #F4EEE3;
+    --text-dim: #C9BFB0;
+    --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    --sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ink);
+    background-image: radial-gradient(ellipse at top, var(--ink-deep) 0%, var(--ink) 60%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  .wrap-narrow { max-width: 600px; margin: 0 auto; padding: 0 24px; }
+
+  header.top {
+    padding: 22px env(safe-area-inset-right,0) 22px env(safe-area-inset-left,0);
+    border-bottom: 1px solid var(--hair);
+  }
+  .brand {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .brand-mark {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .brand-mark span { color: var(--brass); }
+  .brand-tag {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .hero {
+    padding: 72px 0 48px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.12;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+  }
+  .hero p.lede {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--hair);
+    border-radius: 14px;
+    padding: 32px;
+  }
+
+  .form-card { margin: 40px auto 0; }
+  label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .field { margin-bottom: 20px; }
+  input[type="text"], input[type="date"] {
+    width: 100%;
+    background: var(--ink);
+    border: 1px solid var(--hair);
+    border-radius: 8px;
+    padding: 13px 14px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--brass);
+    box-shadow: 0 0 0 3px rgba(199,154,68,0.18);
+  }
+  input::-webkit-calendar-picker-indicator { filter: invert(0.8); }
+
+  .btn {
+    display: inline-block;
+    background: var(--brass);
+    color: #241A2C;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 22px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background 120ms ease;
+  }
+  .btn:hover { background: #D6AC5C; }
+  .btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--hair);
+  }
+  .btn-ghost:hover { background: var(--panel-2); }
+  .disclaimer {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 14px;
+  }
+
+  #reading { display: none; padding: 20px 0 80px; }
+  .reading-head { text-align: center; padding: 40px 0 8px; }
+  .reading-head .for {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .reading-head h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(28px, 5vw, 38px);
+    margin: 0 0 6px;
+  }
+  .reading-head .sub { color: var(--text-dim); font-size: 15px; }
+
+  .ledger { margin-top: 36px; border-left: 1px solid var(--hair); }
+  .entry {
+    position: relative;
+    padding: 6px 0 40px 36px;
+  }
+  .entry:last-child { padding-bottom: 8px; }
+  .entry .num {
+    position: absolute;
+    left: -19px;
+    top: 2px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 1px solid var(--brass-dim);
+    color: var(--brass);
+    font-family: var(--serif);
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .entry .question {
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .entry .archetype {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--text);
+    margin: 0 0 4px;
+  }
+  .entry .archetype .n {
+    color: var(--brass);
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 8px;
+  }
+  .entry .body {
+    background: var(--panel);
+    border: 1px solid var(--hair);
+    color: var(--text-dim);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-top: 10px;
+  }
+  .entry .body p { margin: 0 0 10px; font-size: 15px; }
+  .entry .body p:last-child { margin-bottom: 0; }
+  .entry .body .tension-label {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--brass);
+    margin-top: 12px;
+    margin-bottom: 3px;
+  }
+
+  .reflect-card {
+    background: var(--panel-2);
+    border: 1px solid var(--plum);
+    border-radius: 12px;
+    padding: 26px;
+    margin-top: 8px;
+  }
+  .reflect-card .question {
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .reflect-card h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0 0 12px;
+  }
+  .reflect-card .prompt {
+    font-style: italic;
+    color: var(--text);
+    font-size: 16px;
+    border-left: 2px solid var(--plum);
+    padding-left: 14px;
+  }
+
+  .pricing.wrap { max-width: 880px; }
+  .pricing { padding: 8px 0 90px; }
+  .pricing h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    text-align: center;
+    font-size: 28px;
+    margin: 0 0 8px;
+  }
+  .pricing .sub-h { text-align: center; color: var(--text-dim); font-size: 15px; margin-bottom: 34px; }
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tiers-4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 900px) { .tiers-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 680px) { .tiers { grid-template-columns: 1fr; } }
+  .tier {
+    background: var(--panel);
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .tier.featured { border-color: var(--brass-dim); }
+  .tier .name { font-family: var(--serif); font-size: 19px; margin: 0 0 4px; }
+  .tier .tagline { font-size: 13px; color: var(--text-dim); line-height: 1.4; margin: 0 0 14px; min-height: 34px; }
+  .tier .price { font-size: 26px; font-family: var(--serif); color: var(--brass); margin-bottom: 14px; }
+  .tier .price small { font-size: 13px; color: var(--text-dim); font-family: var(--sans); }
+  .tier ul { list-style: none; padding: 0; margin: 0 0 20px; flex-grow: 1; }
+  .tier li {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    padding: 7px 0;
+    border-top: 1px solid var(--hair);
+  }
+  .tier li:first-child { border-top: none; }
+
+  .tier .teaser {
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--text-dim);
+    border-top: 1px solid var(--hair);
+    padding-top: 12px;
+    margin: 0 0 16px;
+    line-height: 1.5;
+  }
+  .tier .teaser strong { color: var(--brass); font-style: normal; }
+    border-top: 1px solid var(--hair);
+    padding: 30px 0 calc(30px + env(safe-area-inset-bottom, 0px));
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 12.5px;
+  }
+  footer a { color: var(--text-dim); }
+
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a href="#" class="brand-mark" onclick="showLanding();return false;">Personal<span>Code</span></a>
+    <div class="brand-tag">a self-discovery reading</div>
+  </div>
+</header>
+
+<main id="landing">
+  <div class="wrap">
+    <section class="hero">
+      <h1>Your name and your birthdate already hold a pattern.</h1>
+      <p class="lede">Personal Code reads that pattern back to you — not as fate, but as a starting point for reflection.</p>
+
+      <div class="card form-card wrap-narrow" style="max-width:480px;">
+        <div class="field">
+          <label for="fullname">Your full name (as given at birth)</label>
+          <input type="text" id="fullname" placeholder="e.g. Amara Grace Whitfield" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="dob">Your date of birth</label>
+          <input type="date" id="dob">
+        </div>
+        <button class="btn" onclick="generateReading()">Reveal my Personal Code</button>
+        <div class="disclaimer">Free 2-part preview. For reflection and entertainment — not a substitute for professional advice.</div>
+      </div>
+    </section>
+
+    <section class="pricing wrap">
+      <h2>Go deeper when you're ready</h2>
+      <div class="sub-h">One payment, no recurring charges. Each tier unlocks instantly and stays revisitable for your full access period.</div>
+      <div class="tiers tiers-4">
+        <div class="tier">
+          <div class="name">Personal Code Free</div>
+          <div class="tagline">Your first two numbers, decoded — free, in under a minute.</div>
+          <div class="price">$0</div>
+          <ul>
+            <li>Your Life Path number</li>
+            <li>Your Birthday Number</li>
+            <li>A short interpretation of what they mean together</li>
+            <li>One personalized insight to sit with</li>
+          </ul>
+          <div class="teaser">This is just the surface. Your full name carries three more numbers — and they change the picture entirely. See them in the <strong>Personal Code Report</strong>.</div>
+          <a class="btn btn-ghost" href="#" onclick="document.getElementById('fullname').focus();return false;">Get Free Reading</a>
+        </div>
+        <div class="tier featured">
+          <div class="name">Personal Code Report</div>
+          <div class="tagline">Your complete numerological blueprint, delivered as a full report.</div>
+          <div class="price">$16<small> / 3 months</small></div>
+          <ul>
+            <li>Your Personal Code overview</li>
+            <li>Life Path &amp; Birthday Number</li>
+            <li>Expression, Soul Drive &amp; Personality numbers</li>
+            <li>Your Strengths &amp; Growth Edges</li>
+            <li>Career &amp; Work Style</li>
+            <li>Relationships</li>
+            <li>Your Current Personal Year</li>
+            <li>A Personal Statement, written for you</li>
+          </ul>
+          <div class="teaser">Your numbers don't just describe you on their own — they interact with each other, and with time. <strong>Personal Code Plus</strong> reads that interaction.</div>
+          <a class="btn" href="https://paystack.shop/pay/59mi-iodr3" target="_blank" rel="noopener">Get the report — $16</a>
+        </div>
+        <div class="tier">
+          <div class="name">Personal Code Plus</div>
+          <div class="tagline">How your numbers move together — and exactly where you stand right now.</div>
+          <div class="price">$32<small> / 6 months</small></div>
+          <ul>
+            <li>Everything in Personal Code Report</li>
+            <li>Complete core-number interaction analysis</li>
+            <li>Your Current Personal Month, not just the year</li>
+            <li>Expanded relationship compatibility themes</li>
+            <li>Expanded career &amp; money/achievement themes</li>
+          </ul>
+          <div class="teaser">There's a longer arc too — the multi-year turning points your profile has already mapped out. <strong>Deep Code</strong> is where that arc unfolds.</div>
+          <a class="btn btn-ghost" href="https://paystack.shop/pay/q55qda89ta" target="_blank" rel="noopener">Go Plus — $32</a>
+        </div>
+        <div class="tier">
+          <div class="name">Deep Code</div>
+          <div class="tagline">The full architecture of your Personal Code — cycles, tensions, and what's ahead.</div>
+          <div class="price">$48<small> / 12 months</small></div>
+          <ul>
+            <li>Everything in Personal Code Plus</li>
+            <li>Your Pinnacles — major life-stage themes</li>
+            <li>Your Challenges — recurring growth tensions</li>
+            <li>Long-term cycle mapping</li>
+            <li>A full reflection &amp; action prompt for every core number</li>
+          </ul>
+          <div class="teaser">This is the complete picture — every number, every cycle, decoded.</div>
+          <a class="btn btn-ghost" href="https://paystack.shop/pay/xjzhp4tkvd" target="_blank" rel="noopener">Go deep — $48</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<section id="reading">
+  <div class="wrap">
+    <div class="reading-head">
+      <div class="for">A reading for</div>
+      <h2 id="r-name">—</h2>
+      <div class="sub" id="r-sub">—</div>
+    </div>
+
+    <div class="ledger" id="ledger"></div>
+
+    <div class="reflect-card" style="margin-top:0;">
+      <div class="question">WHAT DO I DO WITH IT?</div>
+      <h3>Reflection</h3>
+      <p id="r-synthesis" style="color:var(--text-dim); font-size:15px; margin:0 0 16px;"></p>
+      <div class="prompt" id="r-prompt">—</div>
+    </div>
+
+    <div style="text-align:center; margin-top:36px;">
+      <a class="btn btn-ghost" style="width:auto; padding:12px 26px; display:inline-block;" href="https://paystack.shop/pay/59mi-iodr3" target="_blank" rel="noopener">Unlock the full Personal Code Report — $16</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Personal Code offers symbolic, reflective readings drawn from numerology traditions. It is not medical, psychological, financial, or legal advice, and no reading here should be read as a certain or unavoidable outcome.</div>
+  <div class="wrap" style="margin-top:10px;"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Refunds</a></div>
+</footer>
+
+<script>
+const LETTER_VALUES = {
+  a:1,j:1,s:1, b:2,k:2,t:2, c:3,l:3,u:3, d:4,m:4,v:4,
+  e:5,n:5,w:5, f:6,o:6,x:6, g:7,p:7,y:7, h:8,q:8,z:8, i:9,r:9
+};
+const VOWELS = new Set(['a','e','i','o','u']);
+const MASTERS = new Set([11,22,33]);
+
+function digitSum(n) {
+  return String(Math.abs(n)).split('').reduce((s,d)=>s+Number(d),0);
+}
+function reduceNum(n) {
+  while (n > 9 && !MASTERS.has(n)) n = digitSum(n);
+  return n;
+}
+function reduceKeepZero(n) {
+  if (n === 0) return 0;
+  return reduceNum(n);
+}
+
+function lifePathNumber(dateStr) {
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const rm = reduceNum(m);
+  const rd = reduceNum(d);
+  const ry = reduceNum(digitSum(y));
+  return reduceNum(rm + rd + ry);
+}
+function nameLetters(name) {
+  return name.toLowerCase().replace(/[^a-z]/g,'').split('');
+}
+function expressionNumber(name) {
+  const letters = nameLetters(name);
+  const total = letters.reduce((s,ch)=> s + (LETTER_VALUES[ch]||0), 0);
+  return reduceNum(total);
+}
+function soulUrgeNumber(name) {
+  const letters = nameLetters(name).filter(ch => VOWELS.has(ch));
+  const total = letters.reduce((s,ch)=> s + (LETTER_VALUES[ch]||0), 0);
+  return reduceKeepZero(total) || total; // fallback if no vowels somehow
+}
+function personalityNumber(name) {
+  const letters = nameLetters(name).filter(ch => !VOWELS.has(ch));
+  const total = letters.reduce((s,ch)=> s + (LETTER_VALUES[ch]||0), 0);
+  return reduceKeepZero(total) || total;
+}
+function personalYearNumber(dateStr, currentYear) {
+  const [, m, d] = dateStr.split('-').map(Number);
+  const rm = reduceNum(m);
+  const rd = reduceNum(d);
+  const ry = reduceNum(digitSum(currentYear));
+  return reduceNum(rm + rd + ry);
+}
+
+const NUM = {
+  1: { archetype:"The Trailblazer",
+    direction:"Your profile places symbolic emphasis on initiative — starting things, going first, and shaping direction rather than following one already drawn.",
+    drive:"Underneath the surface, you may resonate with a pull toward independence: a need to know your choices are genuinely your own.",
+    toolkit:"You may bring a natural capacity to originate — ideas, plans, or momentum that others later build on.",
+    signal:"Others often experience you as decisive and self-directed, someone who moves rather than waits to be moved.",
+    tension:"You may benefit from inviting collaboration in early, so independence doesn't tip into isolation.",
+    reflection:"Where in your life are you leading, and where might you be leading alone by habit rather than by choice?"
+  },
+  2: { archetype:"The Harmonizer",
+    direction:"Your profile places symbolic emphasis on connection — reading a room, balancing competing needs, and finding the shape that lets people work together.",
+    drive:"You may resonate with a quiet desire for closeness and fairness, wanting relationships that feel genuinely mutual.",
+    toolkit:"You may bring tact, patience, and an instinct for what a situation needs to stay peaceful and workable.",
+    signal:"Others often experience you as easy to be around — attentive, diplomatic, and unlikely to force a conflict.",
+    tension:"You may benefit from voicing your own needs directly, so harmony doesn't come at your own expense.",
+    reflection:"Where have you kept the peace at a cost you haven't fully named to yourself?"
+  },
+  3: { archetype:"The Storyteller",
+    direction:"Your profile places symbolic emphasis on expression — turning what you notice and feel into words, images, or ideas other people can receive.",
+    drive:"You may resonate with a need to be heard and to bring lightness or meaning into rooms that feel flat.",
+    toolkit:"You may bring wit, imagination, and an ease with communication that draws people in.",
+    signal:"Others often experience you as animated and engaging, someone whose energy is easy to feel.",
+    tension:"You may benefit from following an idea through to completion, so expression turns into something finished, not just started.",
+    reflection:"What have you been meaning to say, make, or finish — and what's actually stopping you?"
+  },
+  4: { archetype:"The Architect",
+    direction:"Your profile places symbolic emphasis on structure — building things that last, in a methodical order, on a foundation that can hold weight.",
+    drive:"You may resonate with a need for stability and for knowing exactly where things stand.",
+    toolkit:"You may bring discipline, reliability, and a talent for organizing complexity into something workable.",
+    signal:"Others often experience you as dependable — the person a plan can actually rest on.",
+    tension:"You may benefit from building in flexibility on purpose, so structure doesn't harden into rigidity.",
+    reflection:"Where has 'the right way to do it' quietly become the only way you'll allow?"
+  },
+  5: { archetype:"The Wayfinder",
+    direction:"Your profile places symbolic emphasis on movement — change, variety, and a resistance to anything that starts to feel permanent too soon.",
+    drive:"You may resonate with a deep need for freedom, and a restlessness when life narrows too far.",
+    toolkit:"You may bring adaptability and a willingness to try what hasn't been tried, in yourself or in a situation.",
+    signal:"Others often experience you as magnetic and unpredictable, someone who makes a room feel less static.",
+    tension:"You may benefit from creating enough freedom within commitments to avoid feeling trapped, rather than avoiding commitment altogether.",
+    reflection:"What commitment have you been avoiding not because it's wrong for you, but because it feels like a cage?"
+  },
+  6: { archetype:"The Steward",
+    direction:"Your profile places symbolic emphasis on responsibility — caring for people, spaces, and commitments that others rely on.",
+    drive:"You may resonate with a need to be useful and to make things better for the people close to you.",
+    toolkit:"You may bring warmth, reliability, and a genuine talent for making others feel looked after.",
+    signal:"Others often experience you as the one who shows up, remembers details, and holds things together.",
+    tension:"You may benefit from setting boundaries around your caretaking, so it doesn't crowd out care for yourself.",
+    reflection:"Whose needs have you been carrying that were never actually handed to you?"
+  },
+  7: { archetype:"The Seeker",
+    direction:"Your profile places symbolic emphasis on understanding — going beneath the surface of things to find out what's actually true.",
+    drive:"You may resonate with a pull toward solitude and depth, and a discomfort with answers that feel too easy.",
+    toolkit:"You may bring analytical clarity and a capacity for focus that others sometimes find hard to reach.",
+    signal:"Others often experience you as private and thoughtful, someone who reveals more slowly than most.",
+    tension:"You may benefit from staying engaged with others while you think things through, so depth doesn't turn into isolation.",
+    reflection:"What question have you been sitting with alone that might move faster with someone else in the room?"
+  },
+  8: { archetype:"The Strategist",
+    direction:"Your profile places symbolic emphasis on achievement — ambition, resource management, and building something with real, measurable weight.",
+    drive:"You may resonate with a need to be capable and in command of outcomes, especially where money or authority is involved.",
+    toolkit:"You may bring focus, judgment, and a practical instinct for turning effort into results.",
+    signal:"Others often experience you as competent and authoritative, someone who gets things done.",
+    tension:"You may benefit from redefining success beyond results alone, so ambition leaves room for ease.",
+    reflection:"If you'd already achieved the goal you're chasing, what would you actually feel — and is that feeling available to you now?"
+  },
+  9: { archetype:"The Torchbearer",
+    direction:"Your profile places symbolic emphasis on completion — closing chapters well and contributing to something larger than yourself.",
+    drive:"You may resonate with a pull toward compassion and a wide view, caring about people beyond your immediate circle.",
+    toolkit:"You may bring generosity, perspective, and an ability to let go of what's no longer serving you.",
+    signal:"Others often experience you as wise and a little bit removed, someone who sees the bigger picture.",
+    tension:"You may benefit from finishing chapters fully and deliberately, so release doesn't turn into avoidance.",
+    reflection:"What are you still holding onto past the point it stopped serving you?"
+  },
+  11: { archetype:"The Luminary",
+    direction:"Your profile places symbolic emphasis on insight — a heightened sensitivity to what others miss, paired with a pull toward meaning.",
+    drive:"You may resonate with intense inner experiences, and a need to translate what you sense into something others can use.",
+    toolkit:"You may bring intuition and inspiration that can move people, when it's grounded in something concrete.",
+    signal:"Others often experience you as perceptive, sometimes intense, and not quite like anyone else in the room.",
+    tension:"You may benefit from grounding your insight in practical steps, so vision has a way of becoming real.",
+    reflection:"What have you sensed clearly but never actually acted on?"
+  },
+  22: { archetype:"The Master Builder",
+    direction:"Your profile places symbolic emphasis on large-scale vision — turning an ambitious idea into something structurally real.",
+    drive:"You may resonate with a need to build things that outlast you, at a scale beyond the everyday.",
+    toolkit:"You may bring the rare combination of big vision and practical discipline to carry it out.",
+    signal:"Others often experience you as capable of more than most people attempt, and they may lean on that.",
+    tension:"You may benefit from pacing big plans deliberately, so ambition doesn't outrun what you can actually sustain.",
+    reflection:"What is the largest thing you're building right now, and is its foundation as solid as its scale demands?"
+  },
+  33: { archetype:"The Guide",
+    direction:"Your profile places symbolic emphasis on selfless guidance — showing up for others in a way that asks little in return.",
+    drive:"You may resonate with a deep need to nurture and to teach, often putting others' growth ahead of your own.",
+    toolkit:"You may bring compassion and patience that make people feel genuinely supported.",
+    signal:"Others often experience you as a steady, caring presence they can lean on.",
+    tension:"You may benefit from letting yourself receive support too, not only give it.",
+    reflection:"Who in your life has actually been allowed to take care of you?"
+  }
+};
+
+const CHAPTER = {
+  1: { name:"A Chapter of New Beginnings", body:"This period symbolically favors starting rather than maintaining — planting something new, even if it's small, rather than polishing what already exists." },
+  2: { name:"A Chapter of Patience", body:"This period symbolically favors cooperation and timing over force — letting things develop at their own pace, often alongside other people." },
+  3: { name:"A Chapter of Expression", body:"This period symbolically favors putting yourself forward — speaking up, creating, and connecting more visibly than usual." },
+  4: { name:"A Chapter of Groundwork", body:"This period symbolically favors discipline and structure — doing the unglamorous work that a future chapter will stand on." },
+  5: { name:"A Chapter of Change", body:"This period symbolically favors movement and flexibility — unexpected turns that are easier to work with than resist." },
+  6: { name:"A Chapter of Responsibility", body:"This period symbolically favors home, relationships, and commitments that ask for your attention and care." },
+  7: { name:"A Chapter of Reflection", body:"This period symbolically favors slowing down and looking inward, even when the pace around you doesn't." },
+  8: { name:"A Chapter of Momentum", body:"This period symbolically favors ambition and results — a stretch where effort tends to show up more visibly in outcomes." },
+  9: { name:"A Chapter of Release", body:"This period symbolically favors closing things out — finishing, letting go, and clearing space before something new arrives." }
+};
+
+let lastResult = null;
+
+function showLanding() {
+  document.getElementById('landing').style.display = '';
+  document.getElementById('reading').style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function entryHTML(num, question, catKey, synthesisNoteId) {
+  const info = NUM[num];
+  return `
+    <div class="entry">
+      <div class="num">${num}</div>
+      <div class="question">${question}</div>
+      <div class="archetype">${info.archetype}<span class="n">— Number ${num}</span></div>
+      <div class="body">
+        <p>${info[catKey]}</p>
+        ${catKey === 'direction' ? `<div class="tension-label">GROWTH EDGE</div><p>${info.tension}</p>` : ''}
+      </div>
+    </div>`;
+}
+
+function generateReading() {
+  const nameInput = document.getElementById('fullname').value.trim();
+  const dobInput = document.getElementById('dob').value;
+
+  if (!nameInput || nameInput.replace(/[^a-zA-Z]/g,'').length < 2) {
+    alert('Please enter your full name.');
+    return;
+  }
+  if (!dobInput) {
+    alert('Please enter your date of birth.');
+    return;
+  }
+
+  const lifePath = lifePathNumber(dobInput);
+  const expression = expressionNumber(nameInput);
+  const soulUrge = soulUrgeNumber(nameInput);
+  const personality = personalityNumber(nameInput);
+  const currentYear = new Date().getFullYear();
+  const personalYear = personalYearNumber(dobInput, currentYear);
+
+  lastResult = { nameInput, lifePath, expression, soulUrge, personality, personalYear };
+
+  document.getElementById('r-name').textContent = nameInput;
+  const dobDate = new Date(dobInput + 'T00:00:00');
+  document.getElementById('r-sub').textContent = `Life Direction ${lifePath} · ${NUM[lifePath].archetype}`;
+
+  const ledger = document.getElementById('ledger');
+  ledger.innerHTML =
+    entryHTML(lifePath, "WHO AM I?", 'direction') +
+    entryHTML(soulUrge, "WHAT DRIVES ME?", 'drive');
+  ledger.innerHTML += `
+    <div class="entry">
+      <div class="num">＋</div>
+      <div class="question">WHAT DO I BRING? · HOW DO OTHERS EXPERIENCE ME? · WHAT CHAPTER AM I IN?</div>
+      <div class="archetype">Included in the full Personal Code Report</div>
+      <div class="body">
+        <p>Your Natural Toolkit, Outer Signal, and Current Chapter readings — plus every growth edge, a bonus reading tied to Tarot, astrology, and numerology's own vibrational tradition, and a surprise waiting on the other side of checkout — unlock in the full report.</p>
+      </div>
+    </div>`;
+
+  document.getElementById('r-synthesis').textContent =
+    `Numbers describe a pattern, not a verdict. What you do with ${NUM[lifePath].archetype.toLowerCase()} energy and ${NUM[soulUrge].archetype.toLowerCase()} drive is still entirely up to you.`;
+  document.getElementById('r-prompt').textContent = NUM[lifePath].reflection;
+
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('reading').style.display = 'block';
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+}
+
+</script>
+</body>
+</html>
