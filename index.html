@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Personal Code — Discover Your Archetype</title>
 <meta name="description" content="Your name and your birthdate already hold a pattern. Astrology and numerology, read together.">
-<meta name="theme-color" content="#1d1626">
+<meta name="theme-color" content="#0b0810">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
 <style>
-:root{--bg:#1d1626;--bg2:#251a2e;--card:#2f2339;--field:#231a2d;--line:#43354e;--gold:#c8a35e;--cream:#f4ede1;--mute:#cdc3c9;--ink:#1d1626;color-scheme:dark}
 *{box-sizing:border-box;margin:0}
-html{background:var(--bg)}
-body{font:400 16px/1.65 Inter,system-ui,sans-serif;color:var(--cream);min-height:100vh;background:radial-gradient(1100px 520px at 50% -8%,#2b2034,transparent 70%),linear-gradient(var(--bg),var(--bg2));padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+body{font:400 16px/1.65 Inter,system-ui,sans-serif;color:var(--cream);min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 .wrap{max-width:980px;margin:0 auto;padding:0 22px}
 header{border-bottom:1px solid var(--line)}
 header .wrap{display:flex;justify-content:space-between;align-items:center;height:76px}
@@ -28,7 +27,7 @@ h1,h2{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.1}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;padding:6px 0 70px}
 .tile{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:18px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s}
 .tile:hover,.tile:focus-visible{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 14px 34px #0005;outline:none}
-.tile.on{border-color:#c8a35e88}
+.tile.on{border-color:#d2ad6688}
 .tile h3{font:500 1.55rem/1.15 'Cormorant Garamond',serif;color:var(--gold)}
 .tile small{display:block;color:var(--mute);font-size:.85rem;margin-top:4px}
 .tile i{color:var(--gold);font-style:normal;font-size:1.3rem}
@@ -50,7 +49,15 @@ ul.inc li:before{content:'✦';color:var(--gold);margin-right:12px;font-size:.8r
 form{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin:0 0 24px;text-align:center}
 label{display:block;color:var(--mute);font-size:.92rem;margin:0 0 8px}
 input{width:100%;padding:16px;background:var(--field);border:1px solid var(--line);border-radius:12px;color:var(--cream);font:400 1rem Inter,sans-serif;margin-bottom:18px}
-input:focus{outline:none;border-color:var(--gold)}
+input,select{transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px #d2ad6626}
+.dob{display:grid;grid-template-columns:1fr 1.6fr 1.2fr;gap:10px;margin-bottom:18px}
+.dob select{width:100%;padding:16px 34px 16px 14px;background:var(--field) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23d2ad66' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 14px center;border:1px solid var(--line);border-radius:12px;color:var(--cream);font:400 1rem Inter,sans-serif;appearance:none;-webkit-appearance:none;cursor:pointer}
+.dob select:hover{border-color:#c8a35e88}
+.dob option{background:var(--field);color:var(--cream)}
+.err{color:#e7a8a8;font-size:.9rem;margin:-6px 0 14px}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero,.tiles,.page,#out .res{animation:rise .5s ease both}
 .note{color:var(--mute);font-size:.85rem;margin-top:14px}
 #out .res{background:var(--card);border:1px solid var(--gold);border-radius:18px;padding:26px;margin-bottom:20px}
 #out h3{font:500 1.9rem 'Cormorant Garamond',serif;color:var(--gold);margin-bottom:12px}
@@ -59,7 +66,7 @@ input:focus{outline:none;border-color:var(--gold)}
 footer{border-top:1px solid var(--line);padding:26px 0 36px;color:var(--mute);font-size:.82rem;text-align:center}
 footer a{color:var(--mute)}
 @media(max-width:560px){.tag{display:none}.hero{padding:48px 0 30px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -79,16 +86,20 @@ const SG=[['Aries','starts boldly and leads from the front'],['Taurus','builds s
 const M=n=>n==11||n==22||n==33,ds=n=>[...String(n)].reduce((a,b)=>a+ +b,0);
 const red=n=>{while(n>9&&!M(n))n=ds(n);return n};
 const $=s=>document.querySelector(s);
+const DAYS=Array.from({length:31},(_,i)=>[i+1,i+1]),MON=['January','February','March','April','May','June','July','August','September','October','November','December'].map((t,i)=>[i+1,t]),YRS=Array.from({length:new Date().getFullYear()-1899},(_,i)=>{const y=new Date().getFullYear()-i;return[y,y]});
+const OP=(ph,a)=>`<option value="" disabled selected hidden>${ph}</option>`+a.map(([v,t])=>`<option value="${v}">${t}</option>`).join('');
 function tiles(){return Object.entries(PK).map(([k,v])=>`<a class="tile${k=='signature'?' on':''}" href="#/${k}"><div><h3>${v.n}</h3><small>${v.p}${v.d?' · '+v.d:''}</small></div><i>→</i></a>`).join('')}
 function home(){return `<section class="hero"><h1>Your name and your birthdate already hold a pattern.</h1><p>Personal Code reads that pattern back to you, through astrology and numerology together. Not as fate, but as a starting point for reflection.</p></section><section class="tiles" aria-label="Packages">${tiles()}</section>`}
 function page(k){const v=PK[k];
  return `<section class="page"><a class="back" href="#/">← All readings</a><h2>${v.n}</h2><p class="lead">${v.t}</p>
  <div class="price">${v.p}${v.d?` <small>one payment · ${v.d} of access</small>`:''}</div>
  <ul class="inc">${v.inc.map(i=>`<li>${i}</li>`).join('')}</ul>`+
- (k=='free'?`<form id="f"><label for="nm">Your full name (as given at birth)</label><input id="nm" required autocomplete="name" placeholder="e.g. Amara Grace Whitfield"><label for="dob">Your date of birth</label><input id="dob" type="date" required><button class="btn">Reveal my Personal Code</button><p class="note">Free preview. For reflection and entertainment, not a substitute for professional advice.</p></form><div id="out"></div>`
+ (k=='free'?`<form id="f"><label for="nm">Your full name (as given at birth)</label><input id="nm" required autocomplete="name" placeholder="e.g. Amara Grace Whitfield"><label>Your date of birth</label><div class="dob"><select id="dd" aria-label="Day" required>${OP('Day',DAYS)}</select><select id="mm" aria-label="Month" required>${OP('Month',MON)}</select><select id="yy" aria-label="Year" required>${OP('Year',YRS)}</select></div><p class="err" id="er" hidden></p><button class="btn">Reveal my Personal Code</button><p class="note">Free preview. For reflection and entertainment, not a substitute for professional advice.</p></form><div id="out"></div>`
  :`<div class="sample"><span>Sample excerpt · ${v.s[0]}</span><p>“${v.s[1]}”</p></div>${v.u?`<a class="btn" href="${v.u}">Unlock ${v.n} — ${v.p}</a>`:`<span class="btn" style="opacity:.55;cursor:default">Opening soon</span>`}<p class="note" style="text-align:center">One payment, no recurring charges. Birth time and place are optional; sunrise is used if unknown.</p>`)+`</section>`}
 function reading(e){e.preventDefault();
- const [y,m,d]=$('#dob').value.split('-').map(Number),name=$('#nm').value.trim();
+ const y=+$('#yy').value,m=+$('#mm').value,d=+$('#dd').value,name=$('#nm').value.trim(),er=$('#er');
+ if(new Date(Date.UTC(y,m-1,d)).getUTCDate()!==d){er.textContent='That date does not exist. Please check the day and month.';er.hidden=false;return}
+ er.hidden=true;
  const a=red(ds(d)+ds(m)+ds(y)),b=red(red(d)+red(m)+red(y)),lpL=(a!==b&&M(a))?a+'/'+b:''+b,lpK=M(a)?a:b;
  const bd=red(d),bdL=(M(d)||d<10)?''+d:d+'/'+bd;
  let sun='',sk='';
@@ -101,7 +112,7 @@ function reading(e){e.preventDefault();
  $('#out').replaceChildren(o,n);o.scrollIntoView({behavior:'smooth',block:'start'})}
 function route(){const k=location.hash.replace('#/','');
  $('#app').innerHTML=PK[k]?page(k):home();scrollTo(0,0);
- if(k=='free')$('#f').addEventListener('submit',reading);
+ if(k=='free'){$('#f').addEventListener('submit',reading);const ids=['dd','mm','yy'];ids.forEach((id,i)=>$('#'+id).addEventListener('change',()=>{const n=$('#'+ids[i+1]);if(n&&!n.value)n.focus()}))}
  document.title=PK[k]?PK[k].n+' — Personal Code':'Personal Code — Discover Your Archetype'}
 addEventListener('hashchange',route);route();
 </script>

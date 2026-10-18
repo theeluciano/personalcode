@@ -1,0 +1,8 @@
+/* Personal Code · shared theme. Add <link rel="stylesheet" href="theme.css"> to the <head> of any page. */
+:root{--bg:#0b0810;--bg2:#120b19;--card:rgba(22,15,30,.88);--field:rgba(11,8,16,.92);--line:#3b2d4b;--gold:#d2ad66;--cream:#f3ebdd;--mute:#cbbfce;--ink:#120d19;--violet:#7a62a8;--bronze:#9a7648;color-scheme:dark}
+html{background:
+ url(kage-pattern.svg) center top/420px 420px repeat,
+ radial-gradient(900px 520px at 85% -5%,rgba(122,98,168,.22),transparent 70%),
+ radial-gradient(900px 520px at 5% 105%,rgba(154,118,72,.16),transparent 70%),
+ linear-gradient(var(--bg),var(--bg2));background-color:var(--bg)}
+body{background:transparent!important}
