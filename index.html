@@ -66,6 +66,17 @@ input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 
 #out h3{font:500 1.9rem 'Cormorant Garamond',serif;color:var(--gold);margin-bottom:12px}
 #out p{margin:0 0 12px}
 #out b{color:var(--gold);font-weight:500}
+.voices{padding:10px 0 80px}.voices h2{text-align:center;font-size:2rem;color:var(--gold);margin-bottom:6px}.voices>p{text-align:center;color:var(--mute);margin:0 0 26px}
+.vc{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.plac{background:#f3ebdd;color:#1d1626;border-radius:4px;padding:26px 24px;border-top:3px solid var(--gold);box-shadow:0 18px 40px #0006}
+.plac p{font:italic 500 1.2rem/1.5 'Cormorant Garamond',serif;margin:0 0 14px}.plac small{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:#7a5c2b}
+.fab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:20;background:var(--gold);color:var(--ink);border:0;border-radius:999px;padding:13px 20px;font:500 .92rem Inter,sans-serif;cursor:pointer;box-shadow:0 10px 30px #0008;transition:transform .2s}.fab:hover{transform:translateY(-2px)}
+#panel{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(76px,calc(env(safe-area-inset-bottom) + 64px));z-index:21;width:min(380px,calc(100vw - 36px));max-height:calc(100vh - 110px);overflow:auto;background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--gold);border-radius:18px;padding:22px;box-shadow:0 24px 60px #000a;animation:rise .3s ease both}
+#panel h3{font:500 1.6rem 'Cormorant Garamond',serif;color:var(--gold);margin-bottom:4px}#panel .note{margin:0 0 14px}
+#panel input,#panel select,#panel textarea{width:100%;padding:12px 14px;margin-bottom:10px;background:var(--field);border:1px solid var(--line);border-radius:10px;color:var(--cream);font:400 .95rem Inter,sans-serif}
+#panel textarea{min-height:110px;resize:vertical}#panel input:focus,#panel select:focus,#panel textarea:focus{outline:none;border-color:var(--gold)}
+#panel .chk{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;margin-bottom:12px}#panel .chk input{width:auto;margin:3px 0 0}
+#x{position:absolute;top:10px;right:14px;background:none;border:0;color:var(--mute);font-size:1.5rem;cursor:pointer}
 footer{border-top:1px solid var(--line);padding:26px 0 36px;color:var(--mute);font-size:.82rem;text-align:center}
 footer a{color:var(--mute)}
 @media(max-width:560px){.tag{display:none}.hero{padding:48px 0 30px}}
@@ -75,6 +86,9 @@ footer a{color:var(--mute)}
 <body>
 <header><div class="wrap"><a class="logo" href="#/">Personal<b>Code</b></a><span class="tag">a self-discovery reading</span></div></header>
 <main class="wrap" id="app"></main>
+<button class="fab" id="fab" hidden>Share your story</button>
+<div id="panel" role="dialog" aria-label="Share feedback" hidden><button id="x" aria-label="Close">×</button><h3>Share with us</h3><p class="note">A suggestion, or a story of what changed for you. Please leave out private or sensitive details.</p>
+<form id="fb"><select id="ty" aria-label="Type"><option value="story">A story or testimonial</option><option value="suggestion">A suggestion</option></select><textarea id="ms" maxlength="1000" required placeholder="Write here…"></textarea><input id="fn" maxlength="40" placeholder="First name (optional)" autocomplete="given-name"><input id="fe" type="email" maxlength="120" placeholder="Email, only if you want a reply (optional)" autocomplete="email"><input id="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px"><label class="chk"><input id="fc" type="checkbox"> You may show my words publicly with my first name, if you choose them (stories only).</label><button class="btn">Send</button><p id="fs" class="note" style="margin-top:10px"></p></form></div>
 <footer><div class="wrap">Personal Code offers symbolic, reflective readings drawn from astrology and numerology traditions. It is not medical, psychological, financial, or legal advice, and no reading here is a certain or unavoidable outcome.<br><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Refunds</a></div></footer>
 <script src="astronomy.min.js"></script>
 <script>
@@ -96,7 +110,7 @@ const $=s=>document.querySelector(s);
 const DAYS=Array.from({length:31},(_,i)=>[i+1,i+1]),MON=['January','February','March','April','May','June','July','August','September','October','November','December'].map((t,i)=>[i+1,t]),YRS=Array.from({length:new Date().getFullYear()-1899},(_,i)=>{const y=new Date().getFullYear()-i;return[y,y]});
 const OP=(ph,a)=>`<option value="" disabled selected hidden>${ph}</option>`+a.map(([v,t])=>`<option value="${v}">${t}</option>`).join('');
 function tiles(){return Object.entries(PK).map(([k,v])=>`<a class="tile${k=='signature'?' on':''}" href="#/${k}"><div><h3>${v.n}</h3><small>${v.d?v.p+' · '+v.d+' access':'$0 · free sample reading'}</small></div><i>→</i></a>`).join('')}
-function home(){return `<section class="hero"><h1>Your name and your birthdate already hold a pattern.</h1><p>Personal Code reads that pattern back to you, through astrology and numerology together. Not as fate, but as a starting point for reflection.</p></section><section class="tiles" aria-label="Packages">${tiles()}</section><p class="fine">Paid readings are a one-time payment with no recurring charges and 3-month access.<br>Birth time and place are optional; sunrise is used if unknown.</p>`}
+function home(){return `<section class="hero"><h1>Your name and your birthdate already hold a pattern.</h1><p>Personal Code reads that pattern back to you, through astrology and numerology together. Not as fate, but as a starting point for reflection.</p></section><section class="tiles" aria-label="Packages">${tiles()}</section><p class="fine">Paid readings are a one-time payment with no recurring charges and 3-month access.<br>Birth time and place are optional; sunrise is used if unknown.</p><section class="voices"><h2>Voices</h2><p>Words from people who have used their Personal Code.</p><div class="vc" id="vc"></div></section>`}
 function page(k){const v=PK[k];
  return `<section class="page"><a class="back" href="#/">← All readings</a><h2>${v.n}</h2><p class="lead">${v.t}</p>
  <div class="price">${v.p}</div>${v.d?'<div class="terms"><span>One-time payment</span><span>No recurring charges</span><span>'+v.d.replace(' months','-month')+' access</span></div>':''}
@@ -117,11 +131,18 @@ function reading(e){e.preventDefault();
  o.insertAdjacentHTML('beforeend',`<p>Your Life Path is <b>${lpL}</b>: ${N[lpK]}.</p><p>Your Birthday Number is <b>${bdL}</b>: ${N[bd]}.</p>${sun}<p style="color:var(--mute)">Sit with this: where do your ${N[lpK]} and ${sk||N[bd]} help each other, and where do they pull apart?</p>`);
  const n=document.createElement('a');n.className='btn';n.href='#/core';n.textContent='Go deeper with Core Code';
  $('#out').replaceChildren(o,n);o.scrollIntoView({behavior:'smooth',block:'start'})}
+async function voices(){const b=$('#vc');if(!b)return;let d=[];try{d=await (await fetch('/api/feedback')).json()}catch(x){}
+ b.replaceChildren(...(d.length?d.slice(0,3).map(v=>{const c=document.createElement('div');c.className='plac';const p=document.createElement('p'),m=document.createElement('small');p.textContent='“'+v.message+'”';m.textContent='— '+(v.name||'A reader');c.append(p,m);return c}):[Object.assign(document.createElement('p'),{textContent:'Stories from our readers will appear here. Have one to share? Use the button at the bottom right.',style:'grid-column:1/-1;text-align:center;color:var(--mute)'})]))}
 function route(){const k=location.hash.replace('#/','');
- $('#app').innerHTML=PK[k]?page(k):home();scrollTo(0,0);
+ $('#app').innerHTML=PK[k]?page(k):home();scrollTo(0,0);$('#fab').hidden=!!PK[k];$('#panel').hidden=true;if(!PK[k])voices();
  if(k=='free'){$('#f').addEventListener('submit',reading);const ids=['dd','mm','yy'];ids.forEach((id,i)=>$('#'+id).addEventListener('change',()=>{const n=$('#'+ids[i+1]);if(n&&!n.value)n.focus()}))}
  const cn=document.querySelector('link[rel=canonical]')||document.head.appendChild(Object.assign(document.createElement('link'),{rel:'canonical'}));cn.href=(CONFIG.siteUrl||location.origin)+location.pathname+(PK[k]?'#/'+k:'');
  document.title=PK[k]?(k=='free'?'Free Sample Reading':PK[k].n)+' — Personal Code':'Personal Code — Discover Your Archetype'}
+$('#fab').onclick=()=>{$('#panel').hidden=!$('#panel').hidden;if(!$('#panel').hidden)$('#ms').focus()};$('#x').onclick=()=>$('#panel').hidden=true;
+addEventListener('keydown',e=>{if(e.key=='Escape')$('#panel').hidden=true});
+$('#fb').addEventListener('submit',async e=>{e.preventDefault();const s=$('#fs');s.textContent='Sending…';
+ try{const r=await fetch('/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:$('#ty').value,message:$('#ms').value,name:$('#fn').value,email:$('#fe').value,consent:$('#fc').checked,website:$('#hp').value})});
+ const d=await r.json();s.textContent=r.ok?'Thank you for sharing.':(d.error||'Something went wrong.');if(r.ok)e.target.reset()}catch(x){s.textContent='Could not send. Please try again.'}});
 addEventListener('hashchange',route);route();
 </script>
 </body>
