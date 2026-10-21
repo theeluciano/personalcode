@@ -2,12 +2,12 @@
 // KV binding required: PERSONAL_CODE_KV
 
 const TIER_AMOUNTS = {
-  report: 1600,
-  plus: 3200,
-  deep: 4800
+  core: 2000,
+  signature: 4000,
+  deep: 8000
 };
 
-const TIER_MONTHS = { report: 3, plus: 6, deep: 12 };
+const TIER_MONTHS = { core: 3, signature: 6, deep: 12 };
 
 const CURRENCY = 'USD';
 
