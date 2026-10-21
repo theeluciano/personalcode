@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Your Reading — Personal Code</title>
+<link rel="stylesheet" href="theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{font:400 16px/1.65 Inter,system-ui,sans-serif;color:var(--cream);min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.wrap{max-width:680px;margin:0 auto;padding:0 22px}
+header{border-bottom:1px solid var(--line)}header .wrap{display:flex;align-items:center;height:72px;max-width:980px}
+.logo{font:500 1.7rem 'Cormorant Garamond',serif;color:var(--cream);text-decoration:none}.logo b{font-weight:500;color:var(--gold)}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,2.8rem);color:var(--gold);margin:40px 0 8px}
+.lead,.note{color:var(--mute)}.note{font-size:.85rem;margin:6px 0 14px}
+form,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin:22px 0}
+label{display:block;color:var(--mute);font-size:.92rem;margin:0 0 8px}
+input,select{width:100%;padding:14px;background:var(--field);border:1px solid var(--line);border-radius:12px;color:var(--cream);font:400 1rem Inter,sans-serif;margin-bottom:16px}
+input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px #d2ad6626}
+.dob{display:grid;grid-template-columns:1fr 1.6fr 1.2fr;gap:10px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:block;width:100%;padding:16px;background:var(--gold);color:var(--ink);border:0;border-radius:12px;font:500 1rem Inter,sans-serif;cursor:pointer}
+.btn:disabled{opacity:.5}
+.sec h3{font-size:1.7rem;color:var(--gold);margin-bottom:10px}.sec p{margin:0 0 10px}
+.err{color:#e7a8a8}
+footer{padding:24px 0 40px;color:var(--mute);font-size:.82rem;text-align:center}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="/">Personal<b>Code</b></a></div></header>
+<main class="wrap">
+<h1 id="h">Your Personal Code</h1>
+<p class="lead" id="st">Checking your payment…</p>
+<form id="f" hidden>
+ <label for="nm">Your full name (as given at birth)</label><input id="nm" required autocomplete="name">
+ <label>Your date of birth</label><div class="dob"><select id="dd" aria-label="Day" required></select><select id="mm" aria-label="Month" required></select><select id="yy" aria-label="Year" required></select></div>
+ <div style="height:16px"></div>
+ <label for="pl">Birthplace (optional)</label><input id="pl" placeholder="e.g. Kitale, Kenya" autocomplete="off">
+ <div class="row"><div><label for="tm">Birth time (optional)</label><input id="tm" type="time"></div><div><label for="tz">Time zone, hours from UTC</label><input id="tz" type="number" step="0.5" min="-12" max="14"></div></div>
+ <p class="note">Birth time and place are optional; sunrise is used if unknown.</p>
+ <p class="err" id="er" hidden></p>
+ <button class="btn" id="go">Build my reading</button>
+</form>
+<div id="out"></div>
+</main>
+<footer><div class="wrap">For reflection and entertainment only. Not medical, psychological, financial, or legal advice.</div></footer>
+<script src="astronomy.min.js"></script>
+<script src="jspdf.umd.min.js"></script>
+<script>
+const $=s=>document.querySelector(s),A=Astronomy;
+const NAMES={core:'Core Code',signature:'Signature Code',deep:'Deep Code'},RANK={core:1,signature:2,deep:3};
+const SGN=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const ST=['starts boldly and leads from the front','builds steadily and values what lasts','thinks fast and connects ideas','protects and feels deeply','creates warmly and wants to be seen','refines with care and serves with skill','seeks balance and fair dealing','goes deep and transforms','explores and searches for meaning','climbs patiently toward goals','innovates and thinks for the group','imagines and feels everything'];
+const EL=['fire (action and spark)','earth (structure and practicality)','air (ideas and connection)','water (feeling and intuition)'];
+const PL=['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Uranus','Neptune','Pluto'];
+const PF={Sun:'your core identity',Moon:'your feelings and needs',Mercury:'how you think and speak',Venus:'what you love and value',Mars:'how you act and push',Jupiter:'where you grow',Saturn:'where you learn discipline',Uranus:'where you break the pattern',Neptune:'where you dream and blur',Pluto:'where you transform',Rising:'how you come across'};
+const HF=['self','money and values','communication','home and roots','creativity and romance','work and health','partnership','shared resources and depth','beliefs and travel','career and public life','community and hopes','the hidden self'];
+const AS=[['conjunction',0,8,'fuse, so they act as one force'],['sextile',60,5,'support each other, an easy opening'],['square',90,7,'pull against each other, which creates tension and growth'],['trine',120,7,'flow together with natural ease'],['opposition',180,8,'sit across from each other, asking you to balance both']];
+const N={1:'initiative and independence',2:'cooperation, sensitivity and balance',3:'expression and creativity',4:'structure, discipline and building',5:'change, freedom and curiosity',6:'care, responsibility and harmony',7:'study, depth and inner truth',8:'ambition, authority and material mastery',9:'compassion, completion and wide vision',11:'intuition and inspiration, with pressure to match',22:'large-scale building that turns vision into form',33:'devoted teaching and service'};
+const SE={1:['self-starting drive','going it alone'],2:['tact and partnership','losing yourself in others'],3:['expressive charm','scattered energy'],4:['reliable structure','rigidity'],5:['adaptability','restlessness'],6:['care and responsibility','over-giving'],7:['depth and analysis','withdrawing'],8:['ambition and authority','overwork and control'],9:['compassion and vision','letting go late']};
+const M=n=>n==11||n==22||n==33,ds=n=>[...String(n)].reduce((a,b)=>a+ +b,0);
+const red=n=>{while(n>9&&!M(n))n=ds(n);return n},r9=n=>{while(n>9)n=ds(n);return n};
+const nm=x=>((x%360)+360)%360,deg=l=>Math.floor(l%30)+'° '+SGN[Math.floor(l/30)];
+const lab=(n)=>(n>9&&!M(n))?n+'/'+red(n):''+n;
+const lonOf=(b,d)=>nm(b=='Sun'?A.SunPosition(d).elon:b=='Moon'?A.EclipticGeoMoon(d).lon:A.Ecliptic(A.GeoVector(A.Body[b],d,true)).elon);
+const rx=(b,d)=>!['Sun','Moon'].includes(b)&&((lonOf(b,new Date(+d+864e5))-lonOf(b,d)+540)%360)-180<0;
+function ascOf(d,lat,lon){const T=(d-Date.UTC(2000,0,1,12))/864e5/36525,e=(23.4392911-0.0130042*T)*Math.PI/180,r=nm(A.SiderealTime(d)*15+lon)*Math.PI/180,p=lat*Math.PI/180;return nm(Math.atan2(Math.cos(r),-(Math.sin(r)*Math.cos(e)+Math.tan(p)*Math.sin(e)))*180/Math.PI)}
+const V=(w,vow)=>[...w.normalize('NFD').toLowerCase().replace(/[^a-z]/g,'')].filter(c=>vow===undefined||('aeiou'.includes(c)===vow)).reduce((s,c)=>s+(c.charCodeAt(0)-97)%9+1,0);
+async function geo(q){try{const r=await (await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+encodeURIComponent(q))).json();return r[0]?{lat:+r[0].lat,lon:+r[0].lon,n:r[0].display_name}:null}catch(e){return null}}
+
+async function build(R,name,y,m,d,place,time,tz){
+ const S=[],add=(h,...l)=>S.push({h,l});
+ let g=place?await geo(place):null,when,conv,note=[];
+ if(time&&!isNaN(tz)){const[hh,mi]=time.split(':').map(Number);when=new Date(Date.UTC(y,m-1,d,hh,mi)-tz*36e5);conv='the birth time you gave'}
+ else if(g){const s=A.SearchRiseSet(A.Body.Sun,new A.Observer(g.lat,g.lon,0),1,new Date(Date.UTC(y,m-1,d)-g.lon/15*36e5),1);when=s?s.date:new Date(Date.UTC(y,m-1,d,12));conv='sunrise at your birthplace'}
+ else{when=new Date(Date.UTC(y,m-1,d,12));conv='noon UT'}
+ if(place&&!g)note.push('We could not find that place, so your Rising sign was left out.');
+ const L={};PL.forEach(b=>L[b]=lonOf(b,when));
+ const asc=(g&&conv!='noon UT')?ascOf(when,g.lat,g.lon):null;
+ // Numbers
+ const lpA=red(ds(d)+ds(m)+ds(y)),lpB=red(red(d)+red(m)+red(y)),lp=(lpA!==lpB&&M(lpA))?lpA+'/'+lpB:''+lpB,lpK=M(lpA)?lpA:lpB;
+ const bd=red(d),ex=red(V(name)),so=red(V(name,true)),pe=red(V(name,false));
+ const now=new Date(),py=r9(r9(m)+r9(d)+r9(now.getFullYear())),pm=r9(py+now.getMonth()+1);
+ // Core
+ const sunL=L.Sun;
+ const c1=['Sun in '+deg(sunL)+': '+PF.Sun+' '+'is one who '+ST[Math.floor(sunL/30)]+'.'+((sunL%30<1||sunL%30>29)?' You were born close to a sign boundary, so your birth time would settle this.':'')];
+ const mk=l=>PL[1]+' in '+deg(l)+': '+PF.Moon+' tend to be one who '+ST[Math.floor(l/30)]+'.';
+ c1.push(mk(L.Moon).replace('tend to be one who','are drawn to one who').replace(': your feelings and needs are drawn to one who',': in feeling, you '));
+ if(conv=='noon UT'){const a=lonOf('Moon',new Date(Date.UTC(y,m-1,d,0))),b=lonOf('Moon',new Date(Date.UTC(y,m-1,d,23,59)));if(Math.floor(a/30)!=Math.floor(b/30))note.push('Your Moon changed sign on your birth date, so its sign depends on your birth time. We used noon UT.')}
+ c1.push(asc!=null?'Rising in '+deg(asc)+': '+PF.Rising+' as one who '+ST[Math.floor(asc/30)]+'. (Calculated for '+conv+'.)':'Rising sign: needs a birthplace. Add one for the full chart.');
+ add('Your Sky',...c1,...note);
+ add('Your Numbers','Life Path '+lp+': '+N[lpK]+'.','Birthday Number '+lab(d)+': '+N[bd]+'.','Expression '+lab(V(name))+': '+N[ex]+'. This is your natural toolkit.','Soul Urge '+lab(V(name,true))+': '+N[so]+'. This is your inner drive.','Personality '+lab(V(name,false))+': '+N[pe]+'. This is your outer signal.');
+ add('Strengths and Growth Edges','Strengths: '+SE[r9(ex)][0]+' (Expression) and '+SE[r9(so)][0]+' (Soul Urge).','Growth edges: watch for '+SE[r9(lpB)][1]+' (Life Path) and '+SE[r9(pe)][1]+' (Personality).');
+ add('This Year','Personal Year '+py+': a year of '+N[py]+'.');
+ if(R>=2){
+  add('Your Planets',...PL.slice(2).map(b=>b+(rx(b,when)?' (retrograde)':'')+' in '+deg(L[b])+': '+PF[b]+'. You tend to be one who '+ST[Math.floor(L[b]/30)]+'.'));
+  const P={...L};if(asc!=null)P.Rising=asc;const k=Object.keys(P),ap=[];
+  for(let i=0;i<k.length;i++)for(let j=i+1;j<k.length;j++){const df=Math.min(nm(P[k[i]]-P[k[j]]),360-nm(P[k[i]]-P[k[j]]));for(const[n,a,o,t]of AS){const lim=(k[i]=='Rising'||k[j]=='Rising')?Math.min(o,5):o,e=Math.abs(df-a);if(e<=lim)ap.push([e,k[i],n,k[j],t])}}
+  ap.sort((a,b)=>a[0]-b[0]);
+  add('Your Aspects (strongest first)',...ap.slice(0,10).map(([e,a,n,b,t])=>a+' '+n+' '+b+' ('+e.toFixed(1)+'° orb): '+PF[a]+' and '+PF[b]+' '+t+'.'));
+  const cnt=[0,0,0,0];[...PL.slice(0,7),...(asc!=null?['Rising']:[])].forEach(b=>cnt[Math.floor((b=='Rising'?asc:L[b])/30)%4]++);
+  const de=cnt.indexOf(Math.max(...cnt)),all=[lpB,bd,ex,so,pe,py].map(r9),fr={};all.forEach(x=>fr[x]=(fr[x]||0)+1);const top=Object.entries(fr).sort((a,b)=>b[1]-a[1])[0];
+  add('Your Chart and Numbers Together','Your chart leans toward '+EL[de]+', while your Life Path carries '+N[lpK]+'. Where the two agree, lean in. Where they differ, that is your growth work.',top[1]>1?'The number '+top[0]+' appears '+top[1]+' times in your code, so its theme, '+N[top[0]]+', is a loud one for you.':'No single number dominates your code, so your themes are varied.');
+  add('This Month','Personal Month '+pm+': a month for '+N[pm]+', inside a '+py+' year.');
+ }
+ if(R>=3){
+  const e1=36-r9(lpB),p=[r9(m)+r9(d),r9(d)+r9(y),0,r9(m)+r9(y)].map(r9);p[2]=r9(p[0]+p[1]);
+  add('Life Stages (Pinnacles)','Birth to about age '+e1+': '+p[0]+', '+N[p[0]]+'.','About '+e1+' to '+(e1+9)+': '+p[1]+', '+N[p[1]]+'.','About '+(e1+9)+' to '+(e1+18)+': '+p[2]+', '+N[p[2]]+'.','From about '+(e1+18)+': '+p[3]+', '+N[p[3]]+'.');
+  const c=[Math.abs(r9(m)-r9(d)),Math.abs(r9(d)-r9(y))];c[2]=Math.abs(c[0]-c[1]);c[3]=Math.abs(r9(m)-r9(y));
+  add('Growth Tests (Challenges)',...c.map((x,i)=>'Test '+(i+1)+': '+(x?x+', '+N[x]+'.':'0, choosing without a fixed rule.')));
+  add('Houses',...(asc!=null?PL.map(b=>b+' in house '+(((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)+1)+' ('+HF[((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)]+'): '+PF[b]+' shows up through '+HF[((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)]+'.').concat(['Houses use the whole-sign system.']):['Houses need a birthplace. Add one to see them.']));
+  add('Reflection Prompts',...[['Life Path',lpK],['Expression',ex],['Soul Urge',so],['Personality',pe]].map(([a,x])=>a+': where does '+N[x]+' show up in your week, and where is it missing?'));
+ }
+ return S}
+
+function render(S){const o=document.createElement('div');
+ S.forEach(s=>{const c=document.createElement('section');c.className='card sec';const h=document.createElement('h3');h.textContent=s.h;c.appendChild(h);s.l.forEach(t=>{const p=document.createElement('p');p.textContent=t;c.appendChild(p)});o.appendChild(c)});return o}
+function pdf(S,name,tier){const{jsPDF}=window.jspdf,D=new jsPDF({unit:'pt',format:'a4'}),W=D.internal.pageSize.getWidth(),H=D.internal.pageSize.getHeight(),Mg=56;let y=Mg;
+ const cl=t=>String(t).replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/[—–]/g,'-').replace(/[^\x00-\xFF]/g,'');
+ const need=h=>{if(y+h>H-Mg){D.addPage();y=Mg}};
+ D.setFont('times','bold');D.setFontSize(26);D.setTextColor(25,18,32);D.text('Personal Code',Mg,y);y+=24;
+ D.setFont('times','italic');D.setFontSize(12);D.setTextColor(120,92,48);D.text(cl(NAMES[tier]+' reading for '+name),Mg,y);y+=30;
+ S.forEach(s=>{need(60);D.setFont('times','bold');D.setFontSize(15);D.setTextColor(154,118,72);D.text(cl(s.h),Mg,y);y+=20;
+  s.l.forEach(t=>{D.setFont('times','normal');D.setFontSize(11);D.setTextColor(30,24,36);const ls=D.splitTextToSize(cl(t),W-2*Mg);need(ls.length*15+8);D.text(ls,Mg,y);y+=ls.length*15+6});y+=8});
+ const n=D.getNumberOfPages();for(let i=1;i<=n;i++){D.setPage(i);D.setFont('times','italic');D.setFontSize(9);D.setTextColor(130,120,130);D.text('Personal Code - for reflection and entertainment only. Page '+i+' of '+n,Mg,H-28)}
+ D.save('Personal-Code-'+(cl(name).replace(/[^\w]+/g,'-')||'reading')+'.pdf')}
+
+// Page setup
+const OP=(ph,a)=>`<option value="" disabled selected hidden>${ph}</option>`+a.map(([v,t])=>`<option value="${v}">${t}</option>`).join('');
+$('#dd').innerHTML=OP('Day',Array.from({length:31},(_,i)=>[i+1,i+1]));
+$('#mm').innerHTML=OP('Month',['January','February','March','April','May','June','July','August','September','October','November','December'].map((t,i)=>[i+1,t]));
+$('#yy').innerHTML=OP('Year',Array.from({length:new Date().getFullYear()-1899},(_,i)=>{const y=new Date().getFullYear()-i;return[y,y]}));
+$('#tz').value=-new Date().getTimezoneOffset()/60;
+const q=new URLSearchParams(location.search),ref=q.get('reference')||q.get('trxref');let tier=null;
+(async()=>{if(!ref){$('#st').textContent='Please open this page from your payment confirmation.';return}
+ try{const r=await fetch('/api/unlock',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({reference:ref})}),d=await r.json();if(!r.ok)throw d;tier=d.tier;
+  $('#h').textContent='Your '+NAMES[tier]+' reading';$('#st').textContent='Payment confirmed. Enter your details to build your reading, then download it as a PDF.';$('#f').hidden=false}
+ catch(e){$('#st').textContent=(e&&e.error)||'We could not confirm your payment. Please contact us with your payment reference.';$('#st').className='lead err'}})();
+$('#f').addEventListener('submit',async e=>{e.preventDefault();const er=$('#er'),y=+$('#yy').value,m=+$('#mm').value,d=+$('#dd').value,name=$('#nm').value.trim();
+ if(new Date(Date.UTC(y,m-1,d)).getUTCDate()!==d){er.textContent='That date does not exist. Please check the day and month.';er.hidden=false;return}er.hidden=true;
+ const b=$('#go');b.disabled=true;b.textContent='Building…';
+ try{const S=await build(RANK[tier],name,y,m,d,$('#pl').value.trim(),$('#tm').value,parseFloat($('#tz').value));
+  const o=render(S),dl=document.createElement('button');dl.className='btn';dl.textContent='Download PDF';dl.onclick=()=>pdf(S,name,tier);
+  $('#out').replaceChildren(o,dl);dl.scrollIntoView({block:'nearest'});o.scrollIntoView({behavior:'smooth'})}
+ catch(x){er.textContent='Something went wrong building your reading. Please check your details and try again.';er.hidden=false}
+ b.disabled=false;b.textContent='Build my reading'});
+</script>
+</body>
+</html>
