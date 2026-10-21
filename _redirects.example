@@ -1,0 +1,3 @@
+# Rename to _redirects (no extension) AFTER your final domain is attached in Cloudflare Pages > Custom domains.
+# Sends the old personalcode.pages.dev address to the new domain. Replace YOURDOMAIN.
+https://personalcode.pages.dev/* https://YOURDOMAIN/:splat 301

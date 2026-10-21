@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="theme.css"><!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -24,13 +24,16 @@ h1,h2{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.1}
 .hero{text-align:center;padding:72px 0 44px}
 .hero h1{font-size:clamp(2.3rem,6.4vw,4.1rem);max-width:15em;margin:0 auto 22px}
 .hero p{color:var(--mute);font-size:1.1rem;max-width:30em;margin:0 auto}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;padding:6px 0 70px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;padding:6px 0 22px}
 .tile{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:18px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s}
 .tile:hover,.tile:focus-visible{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 14px 34px #0005;outline:none}
 .tile.on{border-color:#d2ad6688}
 .tile h3{font:500 1.55rem/1.15 'Cormorant Garamond',serif;color:var(--gold)}
 .tile small{display:block;color:var(--mute);font-size:.85rem;margin-top:4px}
 .tile i{color:var(--gold);font-style:normal;font-size:1.3rem}
+.fine{text-align:center;color:var(--mute);font-size:.86rem;max-width:34em;margin:0 auto;padding-bottom:70px}
+.terms{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.terms span{border:1px solid #d2ad6688;color:var(--gold);border-radius:999px;padding:4px 13px;font-size:.78rem}
 .page{max-width:620px;margin:0 auto;padding:46px 0 80px}
 .back{color:var(--mute);text-decoration:none;font-size:.9rem}
 .back:hover{color:var(--gold)}
@@ -75,11 +78,15 @@ footer a{color:var(--mute)}
 <footer><div class="wrap">Personal Code offers symbolic, reflective readings drawn from astrology and numerology traditions. It is not medical, psychological, financial, or legal advice, and no reading here is a certain or unavoidable outcome.<br><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Refunds</a></div></footer>
 <script src="astronomy.min.js"></script>
 <script>
+/* SITE CONFIG: edit here only.
+   siteUrl: leave '' to use whatever domain the page is served from, or set your final domain, e.g. 'https://personalcode.org'.
+   pay: paste each one-time Paystack payment link here (Core $20, Signature $40, Deep $80). */
+const CONFIG={siteUrl:'',pay:{core:'',signature:'',deep:''}};
 const PK={
-free:{n:'Personal Code Free',p:'Free',t:'Your first numbers and your Sun sign, decoded in under a minute.',inc:['Your Life Path number','Your Birthday Number','Your Sun sign','One insight to sit with']},
-core:{n:'Core Code',p:'$20',d:'3 months',u:'',t:'Your complete blueprint: chart and numbers, read together.',inc:['Sun, Moon and Rising signs','Your five core numbers','Strengths and growth edges','Your current Personal Year'],s:['Overview','Your Sun and Rising both sit in fire, and your numbers lean toward structure. You start fast and build slowly, and this reading shows where each habit helps you.']},
-signature:{n:'Signature Code',p:'$40',d:'6 months',u:'',t:'How your chart and numbers move together, and where you stand right now.',inc:['Everything in Core Code','Planet aspects, strongest to weakest','How your chart and numbers interact','Your current Personal Month'],s:['Interaction','Your Life Path asks you to cooperate while your Mars asks you to lead. This section shows where those two instructions collide, and a simple way to sequence them.']},
-deep:{n:'Deep Code',p:'$80',d:'12 months',u:'',t:'The full architecture of your Personal Code: cycles, tensions and what is ahead.',inc:['Everything in Signature Code','Pinnacles and Challenges','Houses and long-term cycles','A reflection prompt for every core number'],s:['Pinnacles','Your first life stage runs to about age 34 under a creative 3, then turns toward study under a 7. Here is what each stage asks of you, and when the shift begins.']}
+free:{n:'Personal Code',p:'$0',t:'Your first numbers and your Sun sign, decoded in under a minute.',inc:['Your Life Path number','Your Birthday Number','Your Sun sign','One insight to sit with']},
+core:{n:'Core Code',p:'$20',d:'3 months',u:CONFIG.pay.core,t:'Your complete blueprint: chart and numbers, read together.',inc:['Sun, Moon and Rising signs','Your five core numbers','Strengths and growth edges','Your current Personal Year'],s:['Overview','Your Sun and Rising both sit in fire, and your numbers lean toward structure. You start fast and build slowly, and this reading shows where each habit helps you.']},
+signature:{n:'Signature Code',p:'$40',d:'3 months',u:CONFIG.pay.signature,t:'How your chart and numbers move together, and where you stand right now.',inc:['Everything in Core Code','Planet aspects, strongest to weakest','How your chart and numbers interact','Your current Personal Month'],s:['Interaction','Your Life Path asks you to cooperate while your Mars asks you to lead. This section shows where those two instructions collide, and a simple way to sequence them.']},
+deep:{n:'Deep Code',p:'$80',d:'3 months',u:CONFIG.pay.deep,t:'The full architecture of your Personal Code: cycles, tensions and what is ahead.',inc:['Everything in Signature Code','Pinnacles and Challenges','Houses and long-term cycles','A reflection prompt for every core number'],s:['Pinnacles','Your first life stage runs to about age 34 under a creative 3, then turns toward study under a 7. Here is what each stage asks of you, and when the shift begins.']}
 };
 const N={1:'initiative and independence',2:'cooperation, sensitivity and balance',3:'expression and creativity',4:'structure, discipline and building',5:'change, freedom and curiosity',6:'care, responsibility and harmony',7:'study, depth and inner truth',8:'ambition, authority and material mastery',9:'compassion, completion and wide vision',11:'intuition and inspiration, with pressure to match',22:'large-scale building that turns vision into form',33:'devoted teaching and service'};
 const SG=[['Aries','starts boldly and leads from the front'],['Taurus','builds steadily and values what lasts'],['Gemini','thinks fast and connects ideas'],['Cancer','protects and feels deeply'],['Leo','creates warmly and wants to be seen'],['Virgo','refines with care and serves with skill'],['Libra','seeks balance and fair dealing'],['Scorpio','goes deep and transforms'],['Sagittarius','explores and searches for meaning'],['Capricorn','climbs patiently toward goals'],['Aquarius','innovates and thinks for the group'],['Pisces','imagines and feels everything']];
@@ -88,14 +95,14 @@ const red=n=>{while(n>9&&!M(n))n=ds(n);return n};
 const $=s=>document.querySelector(s);
 const DAYS=Array.from({length:31},(_,i)=>[i+1,i+1]),MON=['January','February','March','April','May','June','July','August','September','October','November','December'].map((t,i)=>[i+1,t]),YRS=Array.from({length:new Date().getFullYear()-1899},(_,i)=>{const y=new Date().getFullYear()-i;return[y,y]});
 const OP=(ph,a)=>`<option value="" disabled selected hidden>${ph}</option>`+a.map(([v,t])=>`<option value="${v}">${t}</option>`).join('');
-function tiles(){return Object.entries(PK).map(([k,v])=>`<a class="tile${k=='signature'?' on':''}" href="#/${k}"><div><h3>${v.n}</h3><small>${v.p}${v.d?' · '+v.d:''}</small></div><i>→</i></a>`).join('')}
-function home(){return `<section class="hero"><h1>Your name and your birthdate already hold a pattern.</h1><p>Personal Code reads that pattern back to you, through astrology and numerology together. Not as fate, but as a starting point for reflection.</p></section><section class="tiles" aria-label="Packages">${tiles()}</section>`}
+function tiles(){return Object.entries(PK).map(([k,v])=>`<a class="tile${k=='signature'?' on':''}" href="#/${k}"><div><h3>${v.n}</h3><small>${v.d?v.p+' · '+v.d+' access':'$0 · free sample reading'}</small></div><i>→</i></a>`).join('')}
+function home(){return `<section class="hero"><h1>Your name and your birthdate already hold a pattern.</h1><p>Personal Code reads that pattern back to you, through astrology and numerology together. Not as fate, but as a starting point for reflection.</p></section><section class="tiles" aria-label="Packages">${tiles()}</section><p class="fine">Paid readings are a one-time payment with no recurring charges and 3-month access.<br>Birth time and place are optional; sunrise is used if unknown.</p>`}
 function page(k){const v=PK[k];
  return `<section class="page"><a class="back" href="#/">← All readings</a><h2>${v.n}</h2><p class="lead">${v.t}</p>
- <div class="price">${v.p}${v.d?` <small>one payment · ${v.d} of access</small>`:''}</div>
+ <div class="price">${v.p}</div>${v.d?'<div class="terms"><span>One-time payment</span><span>No recurring charges</span><span>'+v.d.replace(' months','-month')+' access</span></div>':''}
  <ul class="inc">${v.inc.map(i=>`<li>${i}</li>`).join('')}</ul>`+
  (k=='free'?`<form id="f"><label for="nm">Your full name (as given at birth)</label><input id="nm" required autocomplete="name" placeholder="e.g. Amara Grace Whitfield"><label>Your date of birth</label><div class="dob"><select id="dd" aria-label="Day" required>${OP('Day',DAYS)}</select><select id="mm" aria-label="Month" required>${OP('Month',MON)}</select><select id="yy" aria-label="Year" required>${OP('Year',YRS)}</select></div><p class="err" id="er" hidden></p><button class="btn">Reveal my Personal Code</button><p class="note">Free preview. For reflection and entertainment, not a substitute for professional advice.</p></form><div id="out"></div>`
- :`<div class="sample"><span>Sample excerpt · ${v.s[0]}</span><p>“${v.s[1]}”</p></div>${v.u?`<a class="btn" href="${v.u}">Unlock ${v.n} — ${v.p}</a>`:`<span class="btn" style="opacity:.55;cursor:default">Opening soon</span>`}<p class="note" style="text-align:center">One payment, no recurring charges. Birth time and place are optional; sunrise is used if unknown.</p>`)+`</section>`}
+ :`<div class="sample"><span>Sample excerpt · ${v.s[0]}</span><p>“${v.s[1]}”</p></div>${v.u?`<a class="btn" href="${v.u}">Unlock ${v.n} — ${v.p}</a>`:`<span class="btn" style="opacity:.55;cursor:default">Opening soon</span>`}<p class="note" style="text-align:center">Birth time and place are optional; sunrise is used if unknown.</p>`)+`</section>`}
 function reading(e){e.preventDefault();
  const y=+$('#yy').value,m=+$('#mm').value,d=+$('#dd').value,name=$('#nm').value.trim(),er=$('#er');
  if(new Date(Date.UTC(y,m-1,d)).getUTCDate()!==d){er.textContent='That date does not exist. Please check the day and month.';er.hidden=false;return}
@@ -113,7 +120,8 @@ function reading(e){e.preventDefault();
 function route(){const k=location.hash.replace('#/','');
  $('#app').innerHTML=PK[k]?page(k):home();scrollTo(0,0);
  if(k=='free'){$('#f').addEventListener('submit',reading);const ids=['dd','mm','yy'];ids.forEach((id,i)=>$('#'+id).addEventListener('change',()=>{const n=$('#'+ids[i+1]);if(n&&!n.value)n.focus()}))}
- document.title=PK[k]?PK[k].n+' — Personal Code':'Personal Code — Discover Your Archetype'}
+ const cn=document.querySelector('link[rel=canonical]')||document.head.appendChild(Object.assign(document.createElement('link'),{rel:'canonical'}));cn.href=(CONFIG.siteUrl||location.origin)+location.pathname+(PK[k]?'#/'+k:'');
+ document.title=PK[k]?(k=='free'?'Free Sample Reading':PK[k].n)+' — Personal Code':'Personal Code — Discover Your Archetype'}
 addEventListener('hashchange',route);route();
 </script>
 </body>
