@@ -19,24 +19,25 @@ h1{font-size:clamp(2rem,5vw,2.8rem);color:var(--gold);margin:40px 0 8px}
 form,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin:22px 0}
 label{display:block;color:var(--mute);font-size:.92rem;margin:0 0 8px}
 input,select{width:100%;padding:14px;background:var(--field);border:1px solid var(--line);border-radius:12px;color:var(--cream);font:400 1rem Inter,sans-serif;margin-bottom:16px}
-input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px #d2ad6626}
+input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px #D4AF3726}
 .dob{display:grid;grid-template-columns:1fr 1.6fr 1.2fr;gap:10px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn{display:block;width:100%;padding:16px;background:var(--gold);color:var(--ink);border:0;border-radius:12px;font:500 1rem Inter,sans-serif;cursor:pointer}
+.btn.ghost{background:none;border:1px solid var(--gold);color:var(--gold)}.btn:focus-visible{outline:3px solid var(--cream);outline-offset:3px}.sec{background:#F5F2EB;color:#222;border-color:#D4AF37}.sec h3{color:#0B0B0B;border-bottom:2px solid #D4AF37;padding-bottom:6px}
+.btn{display:block;width:100%;padding:16px;background:var(--orange);color:var(--ink);border:0;border-radius:12px;font:500 1rem Inter,sans-serif;cursor:pointer}
 .btn:disabled{opacity:.5}
 .sec h3{font-size:1.7rem;color:var(--gold);margin-bottom:10px}.sec p{margin:0 0 10px}
 .err{color:#e7a8a8}
-.paper{background:#f7f5f0;color:#111;border-top:10px solid #c5a059;border-radius:4px;padding:32px 26px;margin:16px 0;font-family:Georgia,serif;box-shadow:0 18px 40px #0007}
-.paper .gk{text-align:center;color:#a07d37;font-size:.72rem;letter-spacing:.3em;font-weight:bold}
+.paper{background:#F5F2EB;color:#111;border-top:10px solid #D4AF37;border-radius:4px;padding:32px 26px;margin:16px 0;font-family:Georgia,serif;box-shadow:0 18px 40px #0007}
+.paper .gk{text-align:center;color:#6B6863;font-size:.72rem;letter-spacing:.3em;font-weight:bold}
 .paper .gt{text-align:center;font:700 clamp(1.5rem,5vw,2.1rem)/1.2 Georgia,serif;color:#111;margin:10px 0 6px}
-.paper .gs{text-align:center;color:#a07d37;font-weight:bold;font-size:.85rem;letter-spacing:.08em}
-.paper .gs2{text-align:center;color:#464646;font-style:italic;font-size:.9rem;margin:8px 0 22px;padding-bottom:18px;border-bottom:1px solid #c5a059}
-.paper .gh{font:700 .95rem Georgia,serif;letter-spacing:.04em;margin:30px 0 14px;padding-bottom:8px;border-bottom:1.5px solid #c5a059}
-.paper p{margin:0 0 12px;line-height:1.65}.paper .d{color:#c5a059}.paper b{font-weight:700}
-.paper .gsub{color:#a07d37;font-weight:bold;font-size:.78rem;letter-spacing:.08em;margin:20px 0 10px}
-.paper .gq{background:#ece6d8;border-left:4px solid #c5a059;padding:16px 18px;margin:0 0 16px;font-style:italic}.paper .gq small{display:block;font-style:normal;font-weight:bold;color:#a07d37;letter-spacing:.14em;margin-bottom:6px;font-size:.72rem}
-.paper .gd{margin:0 0 10px 14px}.paper .gd b{color:#a07d37;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;display:block}.paper .gd i{display:block}
-.paper .ga{background:#111;color:#f5f0e4;text-align:center;font-style:italic;padding:22px 20px;margin:18px 0 4px}.paper .ga small{display:block;font-style:normal;color:#c5a059;font-weight:bold;letter-spacing:.18em;margin-bottom:10px;font-size:.72rem}
-.paper .gr{display:grid;grid-template-columns:1fr 2fr;gap:12px;background:#ece6d8;padding:10px 12px;border-bottom:1px solid #c5a059;font-size:.9rem}.paper .gr.th{background:#111;color:#c5a059;font-weight:bold;font-size:.72rem;letter-spacing:.1em}
+.paper .gs{text-align:center;color:#6B6863;font-weight:bold;font-size:.85rem;letter-spacing:.08em}
+.paper .gs2{text-align:center;color:#464646;font-style:italic;font-size:.9rem;margin:8px 0 22px;padding-bottom:18px;border-bottom:1px solid #D4AF37}
+.paper .gh{font:700 .95rem Georgia,serif;letter-spacing:.04em;margin:30px 0 14px;padding-bottom:8px;border-bottom:1.5px solid #D4AF37}
+.paper p{margin:0 0 12px;line-height:1.65}.paper .d{color:#D4AF37}.paper b{font-weight:700}
+.paper .gsub{color:#6B6863;font-weight:bold;font-size:.78rem;letter-spacing:.08em;margin:20px 0 10px}
+.paper .gq{background:#ece6d8;border-left:4px solid #D4AF37;padding:16px 18px;margin:0 0 16px;font-style:italic}.paper .gq small{display:block;font-style:normal;font-weight:bold;color:#6B6863;letter-spacing:.14em;margin-bottom:6px;font-size:.72rem}
+.paper .gd{margin:0 0 10px 14px}.paper .gd b{color:#6B6863;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;display:block}.paper .gd i{display:block}
+.paper .ga{background:#111;color:#f5f0e4;text-align:center;font-style:italic;padding:22px 20px;margin:18px 0 4px}.paper .ga small{display:block;font-style:normal;color:#D4AF37;font-weight:bold;letter-spacing:.18em;margin-bottom:10px;font-size:.72rem}
+.paper .gr{display:grid;grid-template-columns:1fr 2fr;gap:12px;background:#ece6d8;padding:10px 12px;border-bottom:1px solid #D4AF37;font-size:.9rem}.paper .gr.th{background:#111;color:#D4AF37;font-weight:bold;font-size:.72rem;letter-spacing:.1em}
 footer{padding:24px 0 40px;color:var(--mute);font-size:.82rem;text-align:center}
 </style>
 </head>
@@ -63,7 +64,7 @@ footer{padding:24px 0 40px;color:var(--mute);font-size:.82rem;text-align:center}
 <script src="jspdf.umd.min.js"></script>
 <script>
 const $=s=>document.querySelector(s),A=Astronomy;
-const NAMES={core:'Core Code',signature:'Signature Code',deep:'Deep Code'},RANK={core:1,signature:2,deep:3};
+const NAMES={core:'Core Code',signature:'Signature Code',deep:'Deep Code',gift:'The Black & Gold Seal'},RANK={core:1,signature:2,deep:3,gift:0};
 const SGN=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
 const ST=['starts boldly and leads from the front','builds steadily and values what lasts','thinks fast and connects ideas','protects and feels deeply','creates warmly and wants to be seen','refines with care and serves with skill','seeks balance and fair dealing','goes deep and transforms','explores and searches for meaning','climbs patiently toward goals','innovates and thinks for the group','imagines and feels everything'];
 const EL=['fire (action and spark)','earth (structure and practicality)','air (ideas and connection)','water (feeling and intuition)'];
@@ -101,31 +102,31 @@ async function build(R,name,y,m,d,place,time,tz){
  const T=(p,l,x)=>p+(x?' (retrograde)':'')+' in '+deg(l)+' ('+PF[p]+'): you tend to be someone who '+ST[Math.floor(l/30)]+'.';
  const c1=[T('Sun',sunL)+((sunL%30<1||sunL%30>29)?' You were born close to a sign boundary, so your birth time would settle this.':''),T('Moon',L.Moon)];
  if(conv=='noon UT'){const a=lonOf('Moon',new Date(Date.UTC(y,m-1,d,0))),b=lonOf('Moon',new Date(Date.UTC(y,m-1,d,23,59)));if(Math.floor(a/30)!=Math.floor(b/30))note.push('Your Moon changed sign on your birth date, so its sign depends on your birth time. We used noon UT.')}
- c1.push(asc!=null?T('Rising',asc)+' (Calculated for '+conv+'.)':'Rising sign: needs a birthplace. Add one for the full chart.');
- add('Your Sky',...c1,...note);
- add('Your Numbers','Life Path '+lp+': '+N[lpK]+'.','Birthday Number '+lab(d)+': '+N[bd]+'.','Expression '+lab(V(name))+': '+N[ex]+'. This is your natural toolkit.','Soul Urge '+lab(V(name,true))+': '+N[so]+'. This is your inner drive.','Personality '+lab(V(name,false))+': '+N[pe]+'. This is your outer signal.');
+ c1.push(asc!=null?T('Rising',asc)+' (Calculated for '+conv+'.)':'Your outward presence needs a birthplace. Add one to complete this.');
+ add('Your Signature',...c1,...note);
+ add('Your Code','Life Path '+lp+': '+N[lpK]+'.','Birthday Number '+lab(d)+': '+N[bd]+'.','Expression '+lab(V(name))+': '+N[ex]+'. This is your natural toolkit.','Soul Urge '+lab(V(name,true))+': '+N[so]+'. This is your inner drive.','Personality '+lab(V(name,false))+': '+N[pe]+'. This is your outer signal.');
  add('Strengths and Growth Edges','Strengths: '+SE[r9(ex)][0]+' (Expression) and '+SE[r9(so)][0]+' (Soul Urge).','Growth edges: watch for '+SE[r9(lpB)][1]+' (Life Path) and '+SE[r9(pe)][1]+' (Personality).');
  add('This Year','Personal Year '+py+': a year of '+N[py]+'.');
  if(R>=2){
-  add('Your Planets',...PL.slice(2).map(b=>T(b,L[b],rx(b,when))));
+  add('Your Inner Voices',...PL.slice(2).map(b=>T(b,L[b],rx(b,when))));
   const P={...L};if(asc!=null)P.Rising=asc;const k=Object.keys(P),ap=[];
   for(let i=0;i<k.length;i++)for(let j=i+1;j<k.length;j++){const df=Math.min(nm(P[k[i]]-P[k[j]]),360-nm(P[k[i]]-P[k[j]]));for(const[n,a,o,t]of AS){const lim=(k[i]=='Rising'||k[j]=='Rising')?Math.min(o,5):o,e=Math.abs(df-a);if(e<=lim)ap.push([e,k[i],n,k[j],t])}}
   ap.sort((a,b)=>a[0]-b[0]);
-  add('Your Aspects (strongest first)',...ap.slice(0,10).map(([e,a,n,b,t])=>a+' '+n+' '+b+' ('+e.toFixed(1)+'° orb): '+PF[a]+' and '+PF[b]+' '+t+'.'));
+  add('Your Strongest Currents',...ap.slice(0,10).map(([e,a,n,b,t])=>a+' '+n+' '+b+' ('+e.toFixed(1)+'° orb): '+PF[a]+' and '+PF[b]+' '+t+'.'));
   const cnt=[0,0,0,0];[...PL.slice(0,7),...(asc!=null?['Rising']:[])].forEach(b=>cnt[Math.floor((b=='Rising'?asc:L[b])/30)%4]++);
   const de=cnt.indexOf(Math.max(...cnt)),all=[lpB,bd,ex,so,pe,py].map(r9),fr={};all.forEach(x=>fr[x]=(fr[x]||0)+1);const top=Object.entries(fr).sort((a,b)=>b[1]-a[1])[0];
-  add('Your Chart and Numbers Together','Your chart leans toward '+EL[de]+', while your Life Path carries '+N[lpK]+'. Where the two agree, lean in. Where they differ, that is your growth work.',top[1]>1?'The number '+top[0]+' appears '+top[1]+' times in your code, so its theme, '+N[top[0]]+', is a loud one for you.':'No single number dominates your code, so your themes are varied.');
+  add('How It All Fits Together','Your pattern leans toward '+EL[de]+', while your Life Path carries '+N[lpK]+'. Where the two agree, lean in. Where they differ, that is your growth work.',top[1]>1?'The number '+top[0]+' appears '+top[1]+' times in your code, so its theme, '+N[top[0]]+', is a loud one for you.':'No single number dominates your code, so your themes are varied.');
   add('This Month','Personal Month '+pm+': a month for '+N[pm]+', inside a '+py+' year.');
  }
  if(R>=3){
   const e1=36-r9(lpB),p=[r9(m)+r9(d),r9(d)+r9(y),0,r9(m)+r9(y)].map(r9);p[2]=r9(p[0]+p[1]);
-  add('Life Stages (Pinnacles)','Birth to about age '+e1+': '+p[0]+', '+N[p[0]]+'.','About '+e1+' to '+(e1+9)+': '+p[1]+', '+N[p[1]]+'.','About '+(e1+9)+' to '+(e1+18)+': '+p[2]+', '+N[p[2]]+'.','From about '+(e1+18)+': '+p[3]+', '+N[p[3]]+'.');
+  add('Your Life Seasons','Birth to about age '+e1+': '+p[0]+', '+N[p[0]]+'.','About '+e1+' to '+(e1+9)+': '+p[1]+', '+N[p[1]]+'.','About '+(e1+9)+' to '+(e1+18)+': '+p[2]+', '+N[p[2]]+'.','From about '+(e1+18)+': '+p[3]+', '+N[p[3]]+'.');
   const c=[Math.abs(r9(m)-r9(d)),Math.abs(r9(d)-r9(y))];c[2]=Math.abs(c[0]-c[1]);c[3]=Math.abs(r9(m)-r9(y));
-  add('Growth Tests (Challenges)',...c.map((x,i)=>'Test '+(i+1)+': '+(x?x+', '+N[x]+'.':'0, choosing without a fixed rule.')));
-  add('Houses',...(asc!=null?PL.map(b=>b+' in house '+(((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)+1)+' ('+HF[((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)]+'): '+PF[b]+', expressed through '+HF[((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)]+'.').concat(['Houses use the whole-sign system.']):['Houses need a birthplace. Add one to see them.']));
+  add('Your Growth Tests',...c.map((x,i)=>'Test '+(i+1)+': '+(x?x+', '+N[x]+'.':'0, choosing without a fixed rule.')));
+  add('Where Your Life Plays Out',...(asc!=null?PL.map(b=>b+' in house '+(((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)+1)+' ('+HF[((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)]+'): '+PF[b]+', expressed through '+HF[((Math.floor(L[b]/30)-Math.floor(asc/30)+12)%12)]+'.'):['This needs a birthplace. Add one to see it.']));
   add('Reflection Prompts',...[['Life Path',lpK],['Expression',ex],['Soul Urge',so],['Personality',pe]].map(([a,x])=>a+': think about '+N[x]+'. Where does it show up in your week, and where is it missing?'));
  }
- if(R>=3){const PW={1:'to lead first and open new paths',2:'to bring people together and hold the balance',3:'to give ideas a voice that others remember',4:'to build lasting foundations and turn chaos into order',5:'to move freely, adapt fast and turn change into advantage',6:'to care for what matters and build harmony around it',7:'to study deeply and find the truth beneath the surface',8:'to turn disciplined effort into authority and lasting value',9:'to finish what matters and serve a bigger vision'},
+ if(R>=3||R==0){const PW={1:'to lead first and open new paths',2:'to bring people together and hold the balance',3:'to give ideas a voice that others remember',4:'to build lasting foundations and turn chaos into order',5:'to move freely, adapt fast and turn change into advantage',6:'to care for what matters and build harmony around it',7:'to study deeply and find the truth beneath the surface',8:'to turn disciplined effort into authority and lasting value',9:'to finish what matters and serve a bigger vision'},
   TT={1:'pioneer',2:'peacemaker',3:'storyteller',4:'master builder',5:'explorer',6:'guardian',7:'seeker',8:'executive',9:'visionary',11:'illuminator',22:'master architect',33:'master teacher'},
   sx=Math.floor(L.Sun/30),mx=Math.floor(L.Moon/30),vx=Math.floor(L.Venus/30),e1=SE[r9(lpB)][1].replace('yourself','myself'),e2=SE[r9(pe)][1].replace('yourself','myself'),e3=SE[r9(ex)][1].replace('yourself','myself');
   const F=name.split(' ')[0].toUpperCase(),cap=t=>t[0].toUpperCase()+t.slice(1),sn=SGN[sx],mn=SGN[mx],vn=SGN[vx],pw=k=>PW[r9(k)],sf=k=>SE[r9(k)][0],an=/^[AEIOU]/.test(sn)?'an':'a',
@@ -138,7 +139,7 @@ async function build(R,name,y,m,d,place,time,tz){
    ['Bold Growth & Careful Protection','It benefits me to take bold, calculated risks when I am ready to scale what I am building.','It benefits me to say no to unverified ventures, drama and speculative deals that threaten my money, time or peace.']];
   const pi=[pp('To master shadow vulnerabilities and balance my nature with my numbers, I command both sides of these 5 core Power Polarities:')];
   pol.forEach((q,i)=>{pi.push(sb('\u2666 '+(i+1)+'. '+q[0]));pi.push({t:'d',k:'Drive',x:q[1]});pi.push({t:'d',k:'Anchor',x:q[2]})});
-  S.gift={kicker:'THE BLACK & GOLD SEAL',title:`THE ${F} MASTER CODE`,sub:'MY POWER, MY DESIRES & MY BLUEPRINT',sub2:'The Comprehensive Alignment of Numerology, Astrology, and Black & Gold Frequencies',
+  S.gift={kicker:'THE BLACK & GOLD SEAL',title:`THE ${F} MASTER CODE`,sub:'MY POWER, MY DESIRES & MY BLUEPRINT',sub2:'The Complete Alignment of Your Name, Your Date, and Your Black & Gold Frequencies',
   intro:[{t:'box',k:'THE SEAL',x:`\u201cMy power is ${pw(so)}, and ${pw(ex)}. Everything I build is grounded in the depth of Black and crowned by the prestige of Gold.\u201d`}],
   sec:[
   {h:'1. CORE POWER & ESOTERIC FOUNDATIONS',i:[{t:'q',x:`\u201cMy power is ${pw(lpB)}, and to build something that outlasts time.\u201d`},
@@ -160,7 +161,7 @@ async function build(R,name,y,m,d,place,time,tz){
    bu('The Showcase Studio (where I make and refine)','My power is to turn private discipline into polished work I am proud to show.'),
    bu('The Public Stage (where I share and publish)','One public act each week: share, present, publish, or ask for what my work is worth.'),
    bu('The Vision Room (where I plan what I am building)','My power is to line up my daily effort with the life I am building.')]},
-  {h:'4. THE SOVEREIGN ALIGNMENT & AVOIDANCE BLUEPRINT',i:[pp(`Synthesis of astrology (${sn} Sun) and numerology (${lp}, ${lab(d)}, Soul Urge ${lab(V(name,true))}) defining desires and boundaries:`),
+  {h:'4. THE SOVEREIGN ALIGNMENT & AVOIDANCE BLUEPRINT',i:[pp(`Synthesis of your birth pattern (${sn} Sun) and your code (${lp}, ${lab(d)}, Soul Urge ${lab(V(name,true))}) defining desires and boundaries:`),
    sb('THE THINGS I WANT'),
    bu('In Connection & Partnerships',`My Venus in ${vn} draws me to a nature that ${ST[vx]}. I want people who respect my need for ${N[so]}, match my drive, and bring peace rather than drama.`),
    bu('In Work & Legacy',`I want work that lets me use ${N[ex]}, real independence, and tangible proof of my discipline.`),
@@ -201,7 +202,7 @@ function renderGift(G){const e=(t,c,x)=>{const n=document.createElement(t);if(c)
   else{n=e('div','gr'+(x.th?' th':''));n.append(e('span',null,x.a),e('span',null,x.b))}
   return n};
  G.intro.forEach(x=>p.append(it(x)));G.sec.forEach(s=>{p.append(e('h4','gh',s.h));s.i.forEach(x=>p.append(it(x)))});return p}
-function pdfGift(G,name){const{jsPDF}=window.jspdf,D=new jsPDF({unit:'pt',format:'a4'}),W=D.internal.pageSize.getWidth(),H=D.internal.pageSize.getHeight(),Mg=58,CW=W-2*Mg,GD=[197,160,89],DG=[160,125,55],DK=[17,17,17],GR=[70,70,70],CR=[236,230,216];let y=0;
+function pdfGift(G,name){const{jsPDF}=window.jspdf,D=new jsPDF({unit:'pt',format:'a4'}),W=D.internal.pageSize.getWidth(),H=D.internal.pageSize.getHeight(),Mg=58,CW=W-2*Mg,GD=[212,175,55],DG=[107,104,99],DK=[11,11,11],GR=[107,104,99],CR=[237,232,219];let y=0;
  const cl=t=>String(t).replace(/[\u201c\u201d]/g,'"').replace(/[\u2018\u2019]/g,"'").replace(/[\u2014\u2013]/g,'-').replace(/\u2666/g,'').replace(/[^\x00-\xFF]/g,'').trim();
  const wr=(t,w)=>D.splitTextToSize(cl(t),w),ft=(st,sz,c)=>{D.setFont('times',st);D.setFontSize(sz);D.setTextColor(...c)};
  const pg=()=>{D.addPage();D.setFillColor(...GD);D.rect(0,0,W,6,'F');y=Mg},need=h=>{if(y+h>H-50)pg()};
@@ -235,20 +236,21 @@ const q=new URLSearchParams(location.search),ref=q.get('reference')||q.get('trxr
 (async()=>{if(!ref){$('#st').textContent='Please open this page from your payment confirmation.';return}
  try{const r=await fetch('/api/unlock',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({reference:ref})}),d=await r.json();if(!r.ok)throw d;tier=d.tier;
   if(tier=='deep'){const u=d.until?new Date(d.until).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}):'';$('#bt').textContent='A surprise gift is waiting for you below.'+(u?' Your access runs until '+u+'.':'');$('#bn').hidden=false}
-  $('#h').textContent='Your '+NAMES[tier]+' reading';$('#st').textContent='Payment confirmed. Enter your details to build your reading, then download it as a PDF.';$('#f').hidden=false}
+  $('#h').textContent=tier=='gift'?'Your Black & Gold Seal':'Your '+NAMES[tier]+' reading';$('#st').textContent=tier=='gift'?'Payment confirmed. Enter your details to open your gift, then download it as a PDF.':'Payment confirmed. Enter your details to build your reading, then download it as a PDF.';$('#f').hidden=false}
  catch(e){$('#st').textContent=(e&&e.error)||'We could not confirm your payment. Please contact us with your payment reference.';$('#st').className='lead err'}})();
 $('#f').addEventListener('submit',async e=>{e.preventDefault();const er=$('#er'),y=+$('#yy').value,m=+$('#mm').value,d=+$('#dd').value,name=$('#nm').value.trim();
  if(new Date(Date.UTC(y,m-1,d)).getUTCDate()!==d){er.textContent='That date does not exist. Please check the day and month.';er.hidden=false;return}er.hidden=true;
  const b=$('#go');b.disabled=true;b.textContent='Building…';
  try{const S=await build(RANK[tier],name,y,m,d,$('#pl').value.trim(),$('#tm').value,parseFloat($('#tz').value));
+  if(tier=='gift'){const gb=document.createElement('button');gb.className='btn';gb.textContent='Download my Master Code (PDF)';gb.onclick=()=>pdfGift(S.gift,name);const gp=renderGift(S.gift);$('#out').replaceChildren(gp,gb);gp.scrollIntoView({behavior:'smooth'});b.disabled=false;b.textContent=tier=='gift'?'Open my gift':'Build my reading';return}
   const o=render(S),dl=document.createElement('button');dl.className='btn';dl.textContent='Download PDF';dl.onclick=()=>pdf(S,name,tier);
   const nodes=[o,dl];
   if(S.gift){const g=document.createElement('div');g.className='card';g.style.borderColor='var(--gold)';g.innerHTML='<h3 style="font-size:1.8rem;color:var(--gold);margin-bottom:6px">A gift for you: The Black &amp; Gold Seal</h3><p class="note">Because you chose Deep Code, there is one more thing waiting for you.</p>';
-   const rb=document.createElement('button');rb.className='btn';rb.textContent='Reveal my gift';
+   const rb=document.createElement('button');rb.className='btn ghost';rb.textContent='Reveal my gift';
    rb.onclick=()=>{rb.remove();g.appendChild(renderGift(S.gift));const gb=document.createElement('button');gb.className='btn';gb.textContent='Download my Master Code (PDF)';gb.onclick=()=>pdfGift(S.gift,name);g.appendChild(gb)};g.appendChild(rb);nodes.push(g)}
   $('#out').replaceChildren(...nodes);dl.scrollIntoView({block:'nearest'});o.scrollIntoView({behavior:'smooth'})}
  catch(x){er.textContent='Something went wrong building your reading. Please check your details and try again.';er.hidden=false}
- b.disabled=false;b.textContent='Build my reading'});
+ b.disabled=false;b.textContent=tier=='gift'?'Open my gift':'Build my reading'});
 </script>
 </body>
 </html>

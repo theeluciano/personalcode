@@ -14,12 +14,20 @@ async function all(env) {
 
 export async function onRequestGet({ request, env }) {
   if (!authed(request, env)) return json({ error: 'Unauthorized' }, 401);
+  if (new URL(request.url).searchParams.get('live')) return json(JSON.parse((await env.FEEDBACK.get('live')) || '{}'));
   return json(await all(env));
 }
 
 export async function onRequestPost({ request, env }) {
   if (!authed(request, env)) return json({ error: 'Unauthorized' }, 401);
   let b; try { b = await request.json(); } catch { return json({ error: 'Bad request' }, 400); }
+  if (b.action === 'setLive') { // hidden live-session module
+    const url = String(b.joinUrl || ''), at = new Date(b.startsAt);
+    const live = { enabled: !!b.enabled, title: String(b.title || '').slice(0, 80), startsAt: isNaN(at) ? '' : at.toISOString(), joinUrl: /^https:\/\//.test(url) ? url.slice(0, 300) : '' };
+    if (live.enabled && (!live.title || !live.startsAt)) return json({ error: 'Add a title and a date and time first.' }, 400);
+    await env.FEEDBACK.put('live', JSON.stringify(live));
+    return json({ ok: true });
+  }
   const key = 'fb:' + b.id, raw = await env.FEEDBACK.get(key);
   if (!raw) return json({ error: 'Not found' }, 404);
   const e = JSON.parse(raw);
