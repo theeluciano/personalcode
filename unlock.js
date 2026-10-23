@@ -2,6 +2,7 @@
 // Needs a secret variable PAYSTACK_SECRET_KEY. Optional: PAYSTACK_CURRENCY (default USD).
 // Amounts are in the smallest currency unit (cents): $20 = 2000, $40 = 4000, $80 = 8000.
 const TIERS = { 2000: 'core', 4000: 'signature', 8000: 'deep' };
+const ACCESS_MONTHS = { core: 3, signature: 6, deep: 12 }; // change here if your access periods change
 const json = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
 
 export async function onRequestPost({ request, env }) {
@@ -14,5 +15,9 @@ export async function onRequestPost({ request, env }) {
   if (d.data.currency !== (env.PAYSTACK_CURRENCY || 'USD')) return json({ error: 'Unexpected payment currency.' }, 402);
   const tier = TIERS[d.data.amount];
   if (!tier) return json({ error: 'Unexpected payment amount.' }, 402);
-  return json({ tier });
+  const paid = new Date(d.data.paid_at || d.data.paidAt);
+  if (isNaN(paid)) return json({ error: 'Could not read the payment date.' }, 402);
+  const end = new Date(paid); end.setMonth(end.getMonth() + ACCESS_MONTHS[tier]);
+  if (Date.now() > end) return json({ error: 'Your access period has ended.' }, 403);
+  return json({ tier, until: end.toISOString() });
 }
