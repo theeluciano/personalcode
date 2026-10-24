@@ -3,14 +3,15 @@ const fs = require('fs'), path = require('path');
 const rd = f => fs.readFileSync(f, 'utf8'), ex = f => fs.existsSync(f);
 const out = []; const chk = (ok, name, why = '') => out.push([ok, name, ok ? '' : why]);
 const html = fs.readdirSync('.').filter(f => f.endsWith('.html'));
-const own = [...html, 'app.js', 'reading.js', 'admin-ui.js', 'legal.js', 'site-config.js', 'theme.css', 'legal.css', 'fonts.css', '_headers', 'robots.txt', ...fs.readdirSync('functions/api').map(f => 'functions/api/' + f)];
+const own = [...html, 'app.js', 'reading.js', 'seal.js', 'admin-ui.js', 'legal.js', 'site-config.js', 'theme.css', 'legal.css', 'fonts.css', '_headers', 'robots.txt', ...fs.readdirSync('functions/api').map(f => 'functions/api/' + f)];
 const cfg = rd('site-config.js');
 for (const k of ['operatorName', 'contactEmail', 'country']) chk(new RegExp(k + ":\\s*'[^']+'").test(cfg), 'Operator detail set: ' + k, 'Fill it in site-config.js');
 chk(own.every(f => !/numerolog|astrolog/i.test(rd(f))), 'Banned words absent from site files', 'Found a banned word');
 chk(html.every(f => !/<script>/.test(rd(f))), 'No inline scripts (strict CSP can apply)', 'Inline <script> found');
+chk(!/Black\s*&\s*Gold|black and gold/i.test(rd('seal.js') + rd('reading.js') + rd('reading.html')), 'No brand phrase inside client report code (seal.js, reading.js, reading.html)', 'Brand phrase found in client-report code');
 const missing = []; for (const f of html) for (const m of rd(f).matchAll(/(?:href|src)="([^"#?]+)"/g)) { const u = m[1]; if (/^(https?:|mailto:|data:|\/$)/.test(u)) continue; if (!ex(u)) missing.push(f + ' -> ' + u); }
 chk(!missing.length, 'All local links and files exist', missing.join('; '));
-const ext = new Set(); for (const f of [...html, 'app.js', 'reading.js', 'theme.css', 'fonts.css', 'legal.css']) for (const m of rd(f).matchAll(/https?:\/\/([a-z0-9.-]+)/gi)) ext.add(m[1]);
+const ext = new Set(); for (const f of [...html, 'app.js', 'reading.js', 'seal.js', 'theme.css', 'fonts.css', 'legal.css']) for (const m of rd(f).matchAll(/https?:\/\/([a-z0-9.-]+)/gi)) ext.add(m[1]);
 const okHosts = ['paystack.shop', 'www.w3.org'];
 chk([...ext].every(h => okHosts.includes(h)), 'Only expected external hosts referenced', [...ext].filter(h => !okHosts.includes(h)).join(', '));
 const app = rd('app.js'), terms = rd('terms.html'), unlock = rd('functions/api/unlock.js');
