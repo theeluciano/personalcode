@@ -1,6 +1,18 @@
 // Admin endpoint. Needs KV binding FEEDBACK and a secret variable ADMIN_KEY.
-const json = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
-const authed = (r, env) => { const k = r.headers.get('x-admin-key') || ''; return !!env.ADMIN_KEY && k.length === env.ADMIN_KEY.length && k === env.ADMIN_KEY; };
+const json = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json', 'x-content-type-options': 'nosniff', 'cache-control': 'no-store' } });
+const enc = new TextEncoder();
+async function same(a, b) { const [x, y] = await Promise.all([crypto.subtle.digest('SHA-256', enc.encode(a)), crypto.subtle.digest('SHA-256', enc.encode(b))]); const u = new Uint8Array(x), v = new Uint8Array(y); let d = 0; for (let i = 0; i < 32; i++) d |= u[i] ^ v[i]; return d === 0; }
+// Returns a Response if the request must be refused, otherwise null. Checks origin, locks out repeated bad keys, compares keys in constant time.
+async function gate(request, env) {
+  const o = request.headers.get('origin');
+  if (o && o !== new URL(request.url).origin) return json({ error: 'Forbidden' }, 403);
+  if (!env.ADMIN_KEY) return json({ error: 'Unauthorized' }, 401);
+  const k = 'rl:auth:' + (request.headers.get('CF-Connecting-IP') || 'x'), n = Number((await env.FEEDBACK.get(k)) || 0);
+  if (n >= 10) return json({ error: 'Too many attempts. Try again in 10 minutes.' }, 429);
+  if (await same(request.headers.get('x-admin-key') || '', env.ADMIN_KEY)) return null;
+  await env.FEEDBACK.put(k, String(n + 1), { expirationTtl: 600 });
+  return json({ error: 'Unauthorized' }, 401);
+}
 
 async function all(env) {
   const out = []; let cursor;
@@ -13,13 +25,13 @@ async function all(env) {
 }
 
 export async function onRequestGet({ request, env }) {
-  if (!authed(request, env)) return json({ error: 'Unauthorized' }, 401);
+  { const g = await gate(request, env); if (g) return g; }
   if (new URL(request.url).searchParams.get('live')) return json(JSON.parse((await env.FEEDBACK.get('live')) || '{}'));
   return json(await all(env));
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!authed(request, env)) return json({ error: 'Unauthorized' }, 401);
+  { const g = await gate(request, env); if (g) return g; }
   let b; try { b = await request.json(); } catch { return json({ error: 'Bad request' }, 400); }
   if (b.action === 'setLive') { // hidden live-session module
     const url = String(b.joinUrl || ''), at = new Date(b.startsAt);

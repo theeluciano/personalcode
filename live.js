@@ -1,5 +1,5 @@
 // Public endpoint for the hidden Live Sessions module. Shows nothing until you switch it on in admin.html.
-const json = (d, s = 200, h = {}) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json', ...h } });
+const json = (d, s = 200, h = {}) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json', 'x-content-type-options': 'nosniff', ...h } });
 export async function onRequestGet({ env }) {
   const raw = await env.FEEDBACK.get('live'), l = raw ? JSON.parse(raw) : null;
   if (!l || !l.enabled) return json({ enabled: false });
