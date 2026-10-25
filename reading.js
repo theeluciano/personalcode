@@ -140,7 +140,7 @@ $('#f').addEventListener('submit',async e=>{e.preventDefault();const er=$('#er')
   if(tier=='gift'){const gb=document.createElement('button');gb.className='btn';gb.textContent='Download my Master Code (PDF)';gb.onclick=()=>pdfGift(S.gift,name);const gp=renderGift(S.gift);$('#out').replaceChildren(gp,gb);gp.scrollIntoView({behavior:'smooth'});b.disabled=false;b.textContent=tier=='gift'?'Open my gift':'Build my reading';return}
   const o=render(S),dl=document.createElement('button');dl.className='btn';dl.textContent='Download PDF';dl.onclick=()=>pdf(S,name,tier);
   const nodes=[o,dl];
-  if(S.gift){const g=document.createElement('div');g.className='card';g.style.borderColor='var(--gold)';g.innerHTML='<h3 style="font-size:1.8rem;color:var(--gold);margin-bottom:6px">A gift for you: your Master Code</h3><p class="note">Because you chose Deep Code, there is one more thing waiting for you.</p>';
+  if(S.gift){const g=document.createElement('div');g.className='card';g.style.borderColor='var(--violet)';g.innerHTML='<h3 style="font-size:1.8rem;color:var(--gold);margin-bottom:6px">A gift for you: your Master Code</h3><p class="note">Because you chose Deep Code, there is one more thing waiting for you.</p>';
    const rb=document.createElement('button');rb.className='btn ghost';rb.textContent='Reveal my gift';
    rb.onclick=()=>{rb.remove();g.appendChild(renderGift(S.gift));const gb=document.createElement('button');gb.className='btn';gb.textContent='Download my Master Code (PDF)';gb.onclick=()=>pdfGift(S.gift,name);g.appendChild(gb)};g.appendChild(rb);nodes.push(g)}
   $('#out').replaceChildren(...nodes);dl.scrollIntoView({block:'nearest'});o.scrollIntoView({behavior:'smooth'})}

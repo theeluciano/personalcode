@@ -1,5 +1,10 @@
-/* Personal Code shared theme, built on the House of Kage brand colour standard.
+/* Personal Code shared theme: House of Kage black, gold and ivory, with violet accents for the site (not used inside client reports).
    Add <link rel="stylesheet" href="theme.css"> to the <head> of any page. */
-:root{--bg:#0B0B0B;--card:rgba(24,24,22,.92);--field:rgba(11,11,11,.95);--line:rgba(212,175,55,.22);--gold:#D4AF37;--cream:#F5F2EB;--ivory:#F5F2EB;--mute:#B8B3A7;--ink:#0B0B0B;--orange:#FF7A00;--red:#E51C23;--yellow:#FFC107;color-scheme:dark}
-html{background:url(kage-pattern.svg) center top/420px 420px repeat,radial-gradient(900px 520px at 50% -8%,rgba(212,175,55,.08),transparent 70%),var(--bg);background-color:var(--bg)}
+:root{--bg:#0B0B0B;--card:rgba(26,18,38,.92);--field:rgba(12,8,18,.95);--line:rgba(155,110,230,.28);--gold:#D4AF37;--cream:#F5F2EB;--ivory:#F5F2EB;--mute:#B8B3A7;--ink:#0B0B0B;--orange:#FF7A00;--red:#E51C23;--yellow:#FFC107;--violet:#8B4FD9;--violet-deep:#2B1240;--lavender:#C9A9F5;color-scheme:dark}
+html{background:url(kage-pattern.svg) center top/420px 420px repeat,
+ radial-gradient(1000px 600px at 50% -10%,rgba(139,79,217,.26),transparent 70%),
+ radial-gradient(800px 480px at 100% 100%,rgba(180,79,214,.14),transparent 70%),
+ radial-gradient(700px 420px at 0% 60%,rgba(212,175,55,.06),transparent 70%),var(--bg);background-color:var(--bg);scrollbar-color:#6A3FB0 #0B0B0B}
 body{background:transparent!important}
+::selection{background:rgba(139,79,217,.55);color:#fff}
+header{border-bottom:1px solid transparent!important;border-image:linear-gradient(90deg,transparent,#8B4FD9 28%,#D4AF37 50%,#8B4FD9 72%,transparent) 1!important}
