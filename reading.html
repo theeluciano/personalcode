@@ -7,34 +7,33 @@
 <meta name="referrer" content="no-referrer">
 <title>Your Reading — Personal Code</title>
 <link rel="stylesheet" href="theme.css">
-<link rel="stylesheet" href="fonts.css">
 <style>
 *{box-sizing:border-box;margin:0}
-body{font:400 16px/1.65 Inter,system-ui,sans-serif;color:var(--cream);min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+body{font:400 16px/1.65 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--cream);min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 .wrap{max-width:680px;margin:0 auto;padding:0 22px}
 header{border-bottom:1px solid var(--line)}header .wrap{display:flex;align-items:center;height:72px;max-width:980px}
-.logo{font:500 1.7rem 'Cormorant Garamond',serif;color:var(--cream);text-decoration:none}.logo b{font-weight:500;color:var(--gold)}
-h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.15}
-h1{font-size:clamp(2rem,5vw,2.8rem);color:var(--gold);margin:40px 0 8px}
+.logo{font:400 1.46rem "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--cream);text-decoration:none}.logo b{font-weight:500;color:var(--gold)}
+h1,h2,h3{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:300;letter-spacing:-.01em;line-height:1.15}
+h1{font-size:clamp(1.7rem,4.4vw,2.3rem);color:var(--gold);margin:40px 0 8px}
 .lead,.note{color:var(--mute)}.note{font-size:.85rem;margin:6px 0 14px}
 form,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin:22px 0}
 label{display:block;color:var(--mute);font-size:.92rem;margin:0 0 8px}
-input,select{width:100%;padding:14px;background:var(--field);border:1px solid var(--line);border-radius:12px;color:var(--cream);font:400 1rem Inter,sans-serif;margin-bottom:16px}
+input,select{width:100%;padding:14px;background:var(--field);border:1px solid var(--line);border-radius:12px;color:var(--cream);font:400 1rem "Helvetica Neue",Helvetica,Arial,sans-serif;margin-bottom:16px}
 input:focus,select:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(139,79,217,.32)}
 .dob{display:grid;grid-template-columns:1fr 1.6fr 1.2fr;gap:10px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn.ghost{background:none;border:1px solid var(--violet);color:var(--lavender)}.btn:focus-visible{outline:3px solid var(--cream);outline-offset:3px}.sec{background:#F5F2EB;color:#222;border-color:#D4AF37}.sws{display:flex;gap:10px;margin:0 0 14px}.swc{flex:1;text-align:center;padding:16px 8px;border-radius:12px;font-weight:500}
 .paper .wkb{border:1px solid #b9b3a4;border-radius:10px;padding:14px 16px;margin:0 0 14px}.paper .wkb b{display:block;font-size:.95rem}.paper .wkb small{display:block;color:#6B6863;margin-bottom:4px}.paper .wkb i{display:block;color:#222;margin-bottom:6px}.paper .wkb ol{margin:6px 0 6px 18px;padding:0}.paper .wkb li{margin:0 0 6px}.paper .wkb .pr{font-size:.82rem;color:#6B6863;margin:4px 0 8px}.paper .wl{border-bottom:1px solid #8c887f;height:24px}
 .sec h3{color:#0B0B0B;border-bottom:2px solid #D4AF37;padding-bottom:6px}
-.btn{display:block;width:100%;padding:16px;background:var(--orange);color:var(--ink);border:0;border-radius:12px;font:500 1rem Inter,sans-serif;cursor:pointer}
+.btn{display:block;width:100%;padding:16px;background:var(--orange);color:var(--ink);border:0;border-radius:12px;font:500 1rem "Helvetica Neue",Helvetica,Arial,sans-serif;cursor:pointer}
 .btn:disabled{opacity:.5}
 .sec h3{font-size:1.7rem;color:var(--gold);margin-bottom:10px}.sec p{margin:0 0 10px}
 .err{color:#e7a8a8}.chk{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;color:var(--mute);margin:0 0 16px}.chk input{width:auto;margin:4px 0 0}.chk a{color:var(--lavender)}
-.paper{background:#F5F2EB;color:#111;border-top:10px solid #D4AF37;border-radius:4px;padding:32px 26px;margin:16px 0;font-family:Georgia,serif;box-shadow:0 18px 40px #0007}
+.paper{background:#F5F2EB;color:#111;border-top:10px solid #D4AF37;border-radius:4px;padding:32px 26px;margin:16px 0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;box-shadow:0 18px 40px #0007}
 .paper .gk{text-align:center;color:#6B6863;font-size:.72rem;letter-spacing:.3em;font-weight:bold}
-.paper .gt{text-align:center;font:700 clamp(1.5rem,5vw,2.1rem)/1.2 Georgia,serif;color:#111;margin:10px 0 6px}
+.paper .gt{text-align:center;font:300 clamp(1.4rem,4.4vw,1.9rem)/1.25 "Helvetica Neue",Helvetica,Arial,sans-serif;color:#111;margin:10px 0 6px}
 .paper .gs{text-align:center;color:#6B6863;font-weight:bold;font-size:.85rem;letter-spacing:.08em}
 .paper .gs2{text-align:center;color:#464646;font-style:italic;font-size:.9rem;margin:8px 0 22px;padding-bottom:18px;border-bottom:1px solid #D4AF37}
-.paper .gh{font:700 .95rem Georgia,serif;letter-spacing:.04em;margin:30px 0 14px;padding-bottom:8px;border-bottom:1.5px solid #D4AF37}
+.paper .gh{font:700 .95rem "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.04em;margin:30px 0 14px;padding-bottom:8px;border-bottom:1.5px solid #D4AF37}
 .paper p{margin:0 0 12px;line-height:1.65}.paper .d{color:#D4AF37}.paper b{font-weight:700}
 .paper .gsub{color:#6B6863;font-weight:bold;font-size:.78rem;letter-spacing:.08em;margin:20px 0 10px}
 .paper .gq{background:#ece6d8;border-left:4px solid #D4AF37;padding:16px 18px;margin:0 0 16px;font-style:italic}.paper .gq small{display:block;font-style:normal;font-weight:bold;color:#6B6863;letter-spacing:.14em;margin-bottom:6px;font-size:.72rem}

@@ -49,7 +49,7 @@ async function build(R,name,y,m,d,place,time,tz){
   const P={...L};if(asc!=null)P.Rising=asc;const k=Object.keys(P),ap=[];
   for(let i=0;i<k.length;i++)for(let j=i+1;j<k.length;j++){const df=Math.min(nm(P[k[i]]-P[k[j]]),360-nm(P[k[i]]-P[k[j]]));for(const[n,a,o,t]of AS){const lim=(k[i]=='Rising'||k[j]=='Rising')?Math.min(o,5):o,e=Math.abs(df-a);if(e<=lim)ap.push([e,k[i],n,k[j],t])}}
   ap.sort((a,b)=>a[0]-b[0]);
-  add('Your Strongest Currents',...ap.slice(0,10).map(([e,a,n,b,t])=>a+' in '+SGN[Math.floor(P[a]/30)%12]+' '+n+' '+b+' in '+SGN[Math.floor(P[b]/30)%12]+' ('+e.toFixed(1)+'° orb): '+PF[a]+' and '+PF[b]+' '+t+'.'));
+  add('Your Strongest Currents',...ap.slice(0,10).map(([e,a,n,b,t])=>a+' in '+SGN[Math.floor(P[a]/30)%12]+' '+n+' '+b+' in '+SGN[Math.floor(P[b]/30)%12]+' ('+e.toFixed(1)+'° orb): With '+PF[a]+' on one side and '+PF[b]+' on the other, the two '+t+'.'));
   const cnt=[0,0,0,0];[...PL.slice(0,7),...(asc!=null?['Rising']:[])].forEach(b=>cnt[Math.floor((b=='Rising'?asc:L[b])/30)%4]++);
   const de=cnt.indexOf(Math.max(...cnt)),all=[lpB,bd,ex,so,pe,py].map(r9),fr={};all.forEach(x=>fr[x]=(fr[x]||0)+1);const top=Object.entries(fr).sort((a,b)=>b[1]-a[1])[0];
   add('How It All Fits Together','Your pattern leans toward '+EL[de]+', while your Life Path carries '+N[lpK]+'. Where the two agree, lean in. Where they differ, that is your growth work.',top[1]>1?'The number '+top[0]+' appears '+top[1]+' times in your code, so its theme, '+N[top[0]]+', is a loud one for you.':'No single number dominates your code, so your themes are varied.');
@@ -74,11 +74,11 @@ function render(S){const o=document.createElement('div');
 function pdf(S,name,tier,title){const{jsPDF}=window.jspdf,D=new jsPDF({unit:'pt',format:'a4'}),W=D.internal.pageSize.getWidth(),H=D.internal.pageSize.getHeight(),Mg=56;let y=Mg;
  const cl=t=>String(t).replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/[—–]/g,'-').replace(/[^\x00-\xFF]/g,'');
  const need=h=>{if(y+h>H-Mg){D.addPage();y=Mg}};
- D.setFont('times','bold');D.setFontSize(26);D.setTextColor(25,18,32);D.text('Personal Code',Mg,y);y+=24;
- D.setFont('times','italic');D.setFontSize(12);D.setTextColor(120,92,48);D.text(cl((title||NAMES[tier]+' reading')+' for '+name),Mg,y);y+=30;
- S.forEach(s=>{need(60);D.setFont('times','bold');D.setFontSize(15);D.setTextColor(154,118,72);D.text(cl(s.h),Mg,y);y+=20;if(s.sw){need(50);s.sw.forEach((k,i)=>{const w=(W-2*Mg-10)/2;D.setFillColor(...hexRGB(k.h));D.rect(Mg+i*(w+10),y,w,34,'F');D.setFont('times','bold');D.setFontSize(11);D.setTextColor(...onRgb(k.h));D.text(cl(k.n),Mg+i*(w+10)+w/2,y+21,{align:'center'})});y+=48}
-  s.l.forEach(t=>{D.setFont('times','normal');D.setFontSize(11);D.setTextColor(30,24,36);const ls=D.splitTextToSize(cl(t),W-2*Mg);need(ls.length*15+8);D.text(ls,Mg,y);y+=ls.length*15+6});y+=8});
- const n=D.getNumberOfPages();for(let i=1;i<=n;i++){D.setPage(i);D.setFont('times','italic');D.setFontSize(9);D.setTextColor(130,120,130);D.text('Personal Code - for reflection and entertainment only. Page '+i+' of '+n,Mg,H-28)}
+ D.setFont('helvetica','bold');D.setFontSize(26);D.setTextColor(25,18,32);D.text('Personal Code',Mg,y);y+=24;
+ D.setFont('helvetica','italic');D.setFontSize(12);D.setTextColor(120,92,48);D.text(cl((title||NAMES[tier]+' reading')+' for '+name),Mg,y);y+=30;
+ S.forEach(s=>{need(60);D.setFont('helvetica','bold');D.setFontSize(15);D.setTextColor(154,118,72);D.text(cl(s.h),Mg,y);y+=20;if(s.sw){need(50);s.sw.forEach((k,i)=>{const w=(W-2*Mg-10)/2;D.setFillColor(...hexRGB(k.h));D.rect(Mg+i*(w+10),y,w,34,'F');D.setFont('helvetica','bold');D.setFontSize(11);D.setTextColor(...onRgb(k.h));D.text(cl(k.n),Mg+i*(w+10)+w/2,y+21,{align:'center'})});y+=48}
+  s.l.forEach(t=>{D.setFont('helvetica','normal');D.setFontSize(11);D.setTextColor(30,24,36);const ls=D.splitTextToSize(cl(t),W-2*Mg);need(ls.length*15+8);D.text(ls,Mg,y);y+=ls.length*15+6});y+=8});
+ const n=D.getNumberOfPages();for(let i=1;i<=n;i++){D.setPage(i);D.setFont('helvetica','italic');D.setFontSize(9);D.setTextColor(130,120,130);D.text('Personal Code - for reflection and entertainment only. Page '+i+' of '+n,Mg,H-28)}
  D.save((title?'Master-Code-':'Personal-Code-')+(cl(name).replace(/[^\w]+/g,'-')||'reading')+'.pdf')}
 
 function renderGift(G){const e=(t,c,x)=>{const n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n},p=e('div','paper');p.style.borderTopColor='#'+G.pc[0];
@@ -97,7 +97,7 @@ function renderGift(G){const e=(t,c,x)=>{const n=document.createElement(t);if(c)
  G.intro.forEach(x=>p.append(it(x)));G.sec.forEach(s=>{p.append(e('h4','gh',s.h));s.i.forEach(x=>p.append(it(x)))});return p}
 function pdfGift(G,name){const{jsPDF}=window.jspdf,D=new jsPDF({unit:'pt',format:'a4'}),W=D.internal.pageSize.getWidth(),H=D.internal.pageSize.getHeight(),Mg=58,CW=W-2*Mg,GD=hexRGB(G.pc[0]),DG=[107,104,99],DK=[11,11,11],GR=[107,104,99],CR=[237,232,219];let y=0;
  const cl=t=>String(t).replace(/[\u201c\u201d]/g,'"').replace(/[\u2018\u2019]/g,"'").replace(/[\u2014\u2013]/g,'-').replace(/\u2666/g,'').replace(/[^\x00-\xFF]/g,'').trim();
- const wr=(t,w)=>D.splitTextToSize(cl(t),w),ft=(st,sz,c)=>{D.setFont('times',st);D.setFontSize(sz);D.setTextColor(...c)};
+ const wr=(t,w)=>D.splitTextToSize(cl(t),w),ft=(st,sz,c)=>{D.setFont('helvetica',st);D.setFontSize(sz);D.setTextColor(...c)};
  const pg=()=>{D.addPage();D.setFillColor(...GD);D.rect(0,0,W,6,'F');y=Mg},need=h=>{if(y+h>H-50)pg()};
  const dia=(x,yy)=>{D.setFillColor(...GD);D.triangle(x,yy-3.5,x+3.2,yy,x-3.2,yy,'F');D.triangle(x-3.2,yy,x+3.2,yy,x,yy+3.5,'F')};
  D.setFillColor(...GD);D.rect(0,0,W,14,'F');D.setFillColor(...hexRGB(G.pc[1]));D.rect(W*.66,0,W*.34,14,'F');y=62;
