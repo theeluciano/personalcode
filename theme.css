@@ -8,5 +8,3 @@ html{background:url(kage-pattern.svg) center top/420px 420px repeat,
 body{background:transparent!important}
 ::selection{background:rgba(139,79,217,.55);color:#fff}
 header{border-bottom:1px solid transparent!important;border-image:linear-gradient(90deg,transparent,#8B4FD9 28%,#D4AF37 50%,#8B4FD9 72%,transparent) 1!important}
-html,body,button,input,select,textarea{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
-h1,h2,h3{font-weight:300;letter-spacing:-.01em}

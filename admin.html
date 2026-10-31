@@ -7,17 +7,4 @@ input,button{font:inherit;padding:12px;border-radius:10px;border:1px solid var(-
 <form id="l"><input id="k" type="password" placeholder="Admin key" autocomplete="current-password"> <button>Open</button></form><section id="lvp" class="c" hidden><h2 style="font:500 1.4rem Georgia,serif;color:var(--gold);margin:0 0 4px">Live sessions (hidden module)</h2><p class="m" id="lvs">Nothing is shown on the site until you switch it on.</p>
 <input id="lt" maxlength="80" placeholder="Session title" style="width:100%;margin:8px 0"><input id="la" type="datetime-local" style="width:100%;margin:0 0 8px"><input id="lj" placeholder="Join link (must start with https://)" style="width:100%;margin:0 0 8px">
 <label class="m"><input id="le" type="checkbox"> Show this session on the homepage</label><br><button id="ls">Save</button></section><div id="o"></div></main>
-<script>
-const $=s=>document.querySelector(s);let K=sessionStorage.getItem('ak')||'';
-const api=(m,b)=>fetch('/api/admin',{method:m,headers:{'x-admin-key':K,'content-type':'application/json'},body:b&&JSON.stringify(b)});
-async function load(){const r=await api('GET');if(!r.ok){$('#s').textContent='Wrong key or not set up yet.';sessionStorage.removeItem('ak');return}
- sessionStorage.setItem('ak',K);$('#l').hidden=true;loadLive();const d=await r.json();$('#s').textContent=d.length+' message(s). Featured: '+d.filter(x=>x.featured).length+' of 3.';
- $('#o').replaceChildren(...d.map(e=>{const c=document.createElement('div');c.className='c'+(e.featured?' f':'');
-  const m=document.createElement('div');m.className='m';m.textContent=new Date(e.at).toLocaleString()+' · '+e.type+' · '+(e.name||'no name')+(e.email?' · '+e.email:'')+' · public OK: '+(e.consent?'yes':'no');
-  const t=document.createElement('div');t.className='t';t.textContent=e.message;c.append(m,t);
-  [['feature','Feature'],['unfeature','Unfeature'],['delete','Delete']].forEach(([a,l])=>{if((a=='feature'&&(e.featured||!e.consent))||(a=='unfeature'&&!e.featured))return;
-   const b=document.createElement('button');b.textContent=l;if(a=='delete')b.className='g';b.onclick=async()=>{if(a=='delete'&&!confirm('Delete this message?'))return;const r=await api('POST',{id:e.id,action:a});if(!r.ok)alert((await r.json()).error);load()};c.append(b)});return c}))}
-async function loadLive(){$('#lvp').hidden=false;const r=await api('GET');const q=await fetch('/api/admin?live=1',{headers:{'x-admin-key':K}});if(!q.ok)return;const l=await q.json();$('#lt').value=l.title||'';$('#lj').value=l.joinUrl||'';$('#le').checked=!!l.enabled;if(l.startsAt){const d=new Date(l.startsAt);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());$('#la').value=d.toISOString().slice(0,16)}$('#lvs').textContent=l.enabled?'ON: visitors can see this session.':'OFF: visitors see nothing.'}
-$('#ls').onclick=async()=>{const r=await api('POST',{action:'setLive',title:$('#lt').value,startsAt:$('#la').value,joinUrl:$('#lj').value,enabled:$('#le').checked});const d=await r.json();if(!r.ok)alert(d.error);else{alert('Saved.');loadLive()}};
-$('#l').onsubmit=e=>{e.preventDefault();K=$('#k').value;load()};if(K)load();
-</script></body></html>
+<script src="admin-ui.js"></script></body></html>
